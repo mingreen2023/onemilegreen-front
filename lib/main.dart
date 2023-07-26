@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:onemilegreen_front/screens/home_screen.dart';
+import 'package:onemilegreen_front/util/theme.dart';
 
 void main() {
   setEnv();
@@ -19,11 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'OneMileGreen',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Placeholder(),
+      theme: theme(),
+      home: const HomeScreen(),
     );
   }
 }
