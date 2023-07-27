@@ -37,15 +37,20 @@ TextTheme textTheme() {
     headlineLarge: TextStyle(
       color: Colors.black,
       fontSize: 48,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
     ),
     headlineMedium: TextStyle(
       color: Colors.black,
       fontSize: 36,
     ),
+    // 메인 중간 환경보효 효과
     headlineSmall: TextStyle(
       color: Colors.black,
       fontSize: 24,
+    ),
+    labelMedium: TextStyle(
+      color: mainSecondTextColor,
+      fontSize: 16,
     ),
     titleLarge: TextStyle(
       color: Colors.black,

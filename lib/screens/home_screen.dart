@@ -101,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       activeIcon: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Image(
-          image: AssetImage('assets/images/$selIcon.png'),
+        child: Image.asset(
+          'assets/images/$selIcon.png',
           width: size,
           height: size,
         ),
