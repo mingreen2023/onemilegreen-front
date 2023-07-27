@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/constants.dart';
 
 class UserInfoWidget extends StatelessWidget {
   final String nickName, userMileage;
@@ -14,7 +15,7 @@ class UserInfoWidget extends StatelessWidget {
     double iconSize = 36;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
+      padding: EdgeInsets.symmetric(horizontal: margin_side),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

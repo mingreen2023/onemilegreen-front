@@ -25,6 +25,8 @@ class Images {
   static const String mainTopMap = "${imagePath}main_top_map.png";
 
 // routine
+  static const String routineJoined = "${imagePath}routine_joined.png";
+  static const String routineNotJoined = "${imagePath}routine_not_joined.png";
 
 // gathering
   static const String gatheringAdd = "${imagePath}gathering_add.png";

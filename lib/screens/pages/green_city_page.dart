@@ -6,6 +6,7 @@ import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/widgets/main_effect_widget.dart';
 import 'package:onemilegreen_front/widgets/main_user_info_widget.dart';
 import 'package:onemilegreen_front/util/util.dart';
+import 'package:onemilegreen_front/util/constants.dart';
 
 class GreenCityPage extends StatefulWidget {
   const GreenCityPage({super.key});
@@ -32,6 +33,9 @@ class _GreenCityPageState extends State<GreenCityPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: margin_top,
+        ),
         // Top - info
         Flexible(
           flex: 3,

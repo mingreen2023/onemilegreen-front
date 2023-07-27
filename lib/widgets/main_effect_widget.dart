@@ -73,7 +73,7 @@ class GreenEffectCardWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const TextSpan(text: "에서"),
+                const TextSpan(text: "에서 "),
                 TextSpan(
                   text: "$districtTotalUser",
                   style: const TextStyle(
