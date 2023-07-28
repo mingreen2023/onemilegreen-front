@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
-import 'package:onemilegreen_front/services/api_service.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/widgets/main_effect_widget.dart';
 import 'package:onemilegreen_front/widgets/main_user_info_widget.dart';
@@ -24,7 +24,7 @@ class _GreenCityPageState extends State<GreenCityPage> {
   late UserInfoWidget userInfoWidget;
   late List<GreenEffectCardWidget> greenEffectList;
   Future<GreenSeoulStatusModel> futureGreenStatus =
-      ApiService.getGreenSeoulStatus(userNo: "1");
+      DioServices.getGreenSeoulStatus(userNo: "1");
 
   // TODO: manage user info
   String userName = "서하";

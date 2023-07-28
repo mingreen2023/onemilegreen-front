@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:onemilegreen_front/models/routine_status_model.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,6 +46,13 @@ class _RoutinePageState extends State<RoutinePage> {
         point: 500),
   ];
 
+  // TODO : refactoring
+  Future<RoutineStatusModel> futureRoutineStatus =
+      DioServices.getUserRoutineStatus(userNo: "1");
+
+  // TODO: manage user info
+  String userName = "서하";
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -58,38 +67,17 @@ class _RoutinePageState extends State<RoutinePage> {
                 SizedBox(
                   height: margin_top,
                 ),
-                const RoutineNoticeWidget(38),
-                const SizedBox(
-                  height: 10,
-                ),
-                // routine summary box
-                Container(
-                  decoration: const BoxDecoration(
-                    color: cardColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: Column(children: [
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    RoutineSummaryWidget(
-                      completed: 2,
-                      inProgress: 3,
-                      total: 36,
-                    ),
-                    SizedBox(
-                      height: 6.h,
-                    ),
-                    const RoutineMyTitleWidget("장바구니 사용하지 않기"),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    const RoutineMyTitleWidget("장바구니 사용하지 않기"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                  ]),
-                ),
+                FutureBuilder(
+                    future: futureRoutineStatus,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return RoutineTopWidget(snapshot.data!);
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }),
+
                 const RoutinListTitleWidget("인기 루틴 목록"),
                 // popluar routine list
                 // start of popular routine list >>>
@@ -121,6 +109,58 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RoutineTopWidget extends StatelessWidget {
+  final RoutineStatusModel routineStatusModel;
+  const RoutineTopWidget(
+    this.routineStatusModel, {
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        RoutineNoticeWidget(routineStatusModel.todayNeighborFinishCount),
+        const SizedBox(
+          height: 10,
+        ),
+        // routine summary box
+        Container(
+          decoration: const BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Column(children: [
+            SizedBox(
+              height: 15.h,
+            ),
+            RoutineSummaryWidget(
+              completed: routineStatusModel.routineFinished,
+              inProgress: routineStatusModel.routineInProgress,
+              total: routineStatusModel.routineTotal,
+            ),
+            SizedBox(
+              height: 6.h,
+            ),
+            Column(children: <Widget>[
+              for (var routineTitle
+                  in routineStatusModel.currentRoutineList) ...[
+                RoutineMyTitleWidget(routineTitle),
+                SizedBox(
+                  height: 5.h,
+                ),
+              ],
+            ]),
+            const SizedBox(
+              height: 10,
+            ),
+          ]),
+        ),
+      ],
     );
   }
 }
