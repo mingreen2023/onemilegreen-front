@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_base_model.dart';
-import 'package:onemilegreen_front/models/routine_join_result.dart';
 import 'package:onemilegreen_front/screens/pages/routine_detail_page.dart';
-import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/theme.dart';
@@ -23,21 +21,23 @@ class RoutineListItemWidget extends StatefulWidget {
 
 class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
   // TODO : refactoring
-  Future<RoutineJoinResultModel> futureRoutineJoin =
-      DioServices.insertRoutine(userNo: "1", rouId: 3);
+  // Future<RoutineJoinResultModel> futureRoutineJoin =
+  //     DioServices.insertRoutine(userNo: "1", rouId: 3);
 
   void onPressed() {
     setState(() {
-      if (widget.originalJoin) {
-        futureRoutineJoin.then(
-          (value) {
-            print(value.message);
-            widget.originalJoin = !widget.originalJoin;
-          },
-        );
-      } else {
-        widget.originalJoin = !widget.originalJoin;
-      }
+      // if (widget.originalJoin) {
+      //   futureRoutineJoin.then(
+      //     (value) {
+      //       print(value.message);
+      //       widget.originalJoin = !widget.originalJoin;
+      //     },
+      //   );
+      // } else {
+      //   widget.originalJoin = !widget.originalJoin;
+      // }
+
+      widget.originalJoin = !widget.originalJoin;
     });
   }
 
@@ -53,6 +53,7 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
         );
       },
       child: Container(
+        padding: const EdgeInsets.all(0),
         decoration: const BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -63,6 +64,7 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -79,8 +81,8 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
               widget.routine.rouName,
               style: CustomTextStyle.routineItemTitle,
             ),
-            const SizedBox(
-              height: 34,
+            SizedBox(
+              height: 34.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,15 +102,34 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
                   ],
                 ),
                 if (widget.originalJoin) ...[
-                  IconButton(
-                      onPressed: onPressed,
-                      icon: Image.asset(Images.routineJoined)),
+                  SizedBox(
+                    width: 30.w,
+                    height: 30.w,
+                    child: IconButton(
+                        iconSize: 30.w, //for web build
+                        onPressed: onPressed,
+                        padding: EdgeInsets.only(right: 7.w),
+                        icon: Image.asset(Images.routineJoined)),
+                  ),
                 ] else ...[
-                  IconButton(
-                      onPressed: onPressed,
-                      icon: Image.asset(Images.routineNotJoined)),
+                  SizedBox(
+                    width: 30.w,
+                    height: 30.w,
+                    child: IconButton(
+                        iconSize: 30.w, //for web build
+                        onPressed: onPressed,
+                        padding: EdgeInsets.only(right: 7.w),
+                        icon: Image.asset(Images.routineNotJoined)),
+                  ),
                 ]
               ],
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: SizedBox(
+                height: 20.h,
+              ),
             ),
           ],
         ),

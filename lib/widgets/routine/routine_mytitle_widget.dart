@@ -17,17 +17,20 @@ class RoutineMyTitleWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: TextButton(
+        clipBehavior: Clip.hardEdge,
         style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.symmetric(horizontal: 15.w)),
           backgroundColor: MaterialStateProperty.all(Colors.white),
-          minimumSize: MaterialStateProperty.all<Size>(Size.fromHeight(40.h)),
+          fixedSize: MaterialStateProperty.all<Size>(Size(305.w, 40.h)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.w),
             ),
           ),
+          visualDensity: VisualDensity.compact,
         ),
         onPressed: () {
-          print("id: ${title["routineId"]}");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -35,24 +38,21 @@ class RoutineMyTitleWidget extends StatelessWidget {
                 fullscreenDialog: true),
           );
         },
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              title["title"],
-              style: CustomTextStyle.routineMytitle,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(
+            title["title"],
+            style: CustomTextStyle.routineMytitle,
+          ),
+          SizedBox(
+            height: 12.h,
+            width: 7.h,
+            child: Image.asset(
+              Images.chevronForward,
+              color: primaryColor,
             ),
-            SizedBox(
-              height: 12.h,
-              width: 7.h,
-              child: Image.asset(
-                Images.chevronForward,
-                color: primaryColor,
-              ),
-            ),
-          ]),
-        ),
+          ),
+        ]),
       ),
     );
   }

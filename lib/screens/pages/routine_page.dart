@@ -7,9 +7,9 @@ import 'package:onemilegreen_front/util/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/widgets/routine/routine_list_item_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/routine_list_title_widget.dart';
-import 'package:onemilegreen_front/widgets/routine/routine_mytitle_widget.dart';
-import 'package:onemilegreen_front/widgets/routine/routine_notice_widget.dart';
-import 'package:onemilegreen_front/widgets/routine/routine_summary_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_shimmer_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_top_status_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RoutinePage extends StatefulWidget {
   const RoutinePage({super.key});
@@ -44,122 +44,66 @@ class _RoutinePageState extends State<RoutinePage> {
                   height: margin_top,
                 ),
                 FutureBuilder(
-                    future: futureRoutineStatus,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return RoutineTopWidget(snapshot.data!);
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                  future: Future.wait([
+                    futureRoutineStatus,
+                    futureRoutineList,
+                  ]),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      RoutineStatusModel status =
+                          snapshot.data![0] as RoutineStatusModel;
+                      RoutineListModel list =
+                          snapshot.data![1] as RoutineListModel;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RoutineTopWidget(status),
+                          // popluar routine list
+                          // start of popular routine list >>>
+                          const RoutinListTitleWidget("인기 루틴 목록"),
+                          GridView.count(
+                            physics: const ScrollPhysics(),
+                            padding: const EdgeInsets.all(0),
+                            mainAxisSpacing: 1.w,
+                            crossAxisSpacing: 10.w,
+                            childAspectRatio: 156.w / 169.h,
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            children: list.popularRoutineList
+                                .map((e) => RoutineListItemWidget(routine: e))
+                                .toList(),
+                          ),
+                          // recommand routine list
+                          // start of recommand routine list >>>
+                          const RoutinListTitleWidget("추천 루틴 목록"),
+                          GridView.count(
+                            physics: const ScrollPhysics(),
+                            padding: const EdgeInsets.all(0),
+                            mainAxisSpacing: 1.0,
+                            crossAxisSpacing: 10.w,
+                            childAspectRatio: 155.w / 169.h,
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            children: list.recommandRoutineList
+                                .map((e) => RoutineListItemWidget(routine: e))
+                                .toList(),
+                          ),
+                        ],
                       );
-                    }),
-
-                const RoutinListTitleWidget("인기 루틴 목록"),
-                // popluar routine list
-                // start of popular routine list >>>
-                FutureBuilder(
-                    future: futureRoutineList,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return GridView.count(
-                          physics: const ScrollPhysics(),
-                          padding: const EdgeInsets.all(0),
-                          mainAxisSpacing: 1.0,
-                          crossAxisSpacing: 10.w,
-                          childAspectRatio: 155.w / 155.h,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          children: snapshot.data!.popularRoutineList
-                              .map((e) => RoutineListItemWidget(routine: e))
-                              .toList(),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }),
-                // recommand routine list
-                // start of recommand routine list >>>
-                const RoutinListTitleWidget("추천 루틴 목록"),
-                FutureBuilder(
-                    future: futureRoutineList,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return GridView.count(
-                          physics: const ScrollPhysics(),
-                          padding: const EdgeInsets.all(0),
-                          mainAxisSpacing: 1.0,
-                          crossAxisSpacing: 10.w,
-                          childAspectRatio: 155.w / 155.h,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          children: snapshot.data!.recommandRoutineList
-                              .map((e) => RoutineListItemWidget(routine: e))
-                              .toList(),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }),
+                    }
+                    return Shimmer.fromColors(
+                      baseColor: cardColor,
+                      highlightColor: Colors.white,
+                      child: const RoutineShimmerPage(),
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class RoutineTopWidget extends StatelessWidget {
-  final RoutineStatusModel routineStatusModel;
-
-  const RoutineTopWidget(
-    this.routineStatusModel, {
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RoutineNoticeWidget(routineStatusModel.todayNeighborFinishCount),
-        const SizedBox(
-          height: 10,
-        ),
-        // routine summary box
-        Container(
-          decoration: const BoxDecoration(
-            color: cardColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(children: [
-            SizedBox(
-              height: 15.h,
-            ),
-            RoutineSummaryWidget(
-              completed: routineStatusModel.routineFinished,
-              inProgress: routineStatusModel.routineInProgress,
-              total: routineStatusModel.routineTotal,
-            ),
-            SizedBox(
-              height: 13.h,
-            ),
-            Column(children: <Widget>[
-              for (var routineTitle
-                  in routineStatusModel.currentRoutineList) ...[
-                RoutineMyTitleWidget(routineTitle),
-                SizedBox(
-                  height: 5.h,
-                ),
-              ],
-            ]),
-            const SizedBox(
-              height: 10,
-            ),
-          ]),
-        ),
-      ],
     );
   }
 }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
 
 class RoutineAuthTabWidget extends StatelessWidget {
   const RoutineAuthTabWidget({
     super.key,
+    required this.data,
   });
+
+  final RoutineDetailModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -40,46 +44,52 @@ class RoutineAuthTabWidget extends StatelessWidget {
         // 인증 예시 이미지
         Row(
           children: [
-            Stack(
-              children: [
-                Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: SizedBox(
-                    width: 30.w,
-                    height: 30.h,
-                    child: Image.asset(Images.iconX),
-                  ),
-                ),
-                Container(
-                  width: 154.w,
-                  height: 154.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: cardColor),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 12.w,
-            ),
             Stack(children: [
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: SizedBox(
-                  width: 30.w,
-                  height: 30.h,
-                  child: Image.asset(Images.iconO),
-                ),
-              ),
               Container(
                 width: 154.w,
                 height: 154.h,
                 decoration: BoxDecoration(
                   border: Border.all(color: cardColor),
                   borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                    image: NetworkImage(data.rouNpImg),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 10..h,
+                right: 10.w,
+                child: SizedBox(
+                  width: 30.w,
+                  height: 30.h,
+                  child: Image.asset(Images.iconX),
+                ),
+              ),
+            ]),
+            SizedBox(
+              width: 12.w,
+            ),
+            Stack(children: [
+              Container(
+                width: 154.w,
+                height: 154.h,
+                decoration: BoxDecoration(
+                  border: Border.all(color: cardColor),
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                    image: NetworkImage(data.rouPassImg),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 10..h,
+                right: 10.w,
+                child: SizedBox(
+                  width: 30.w,
+                  height: 30.h,
+                  child: Image.asset(Images.iconO),
                 ),
               ),
             ]),

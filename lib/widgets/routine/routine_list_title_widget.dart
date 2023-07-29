@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/theme.dart';
 
 class RoutinListTitleWidget extends StatelessWidget {
@@ -11,17 +12,18 @@ class RoutinListTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: 25.h,
         ),
         // popluar routine list
         Text(
           title,
           style: CustomTextStyle.routineList,
         ),
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: 25.h,
         ),
       ],
     );

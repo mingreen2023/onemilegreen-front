@@ -23,18 +23,16 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(
-                    color: cardColor,
-                    width: 1.0), // Set border color and width as needed.
+                bottom: BorderSide(color: cardColor, width: 1.w),
               ),
             ),
             child: TabBar(
               tabs: [
                 Container(
                   height: tabBarHeight,
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.only(bottom: 10.h),
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     '인증사진 가이드',
@@ -46,7 +44,7 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
                 ),
                 Container(
                   height: tabBarHeight,
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.only(bottom: 10.h),
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     '참가자 인증현황',
@@ -69,7 +67,7 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
             child: TabBarView(
               controller: _tabController,
               children: [
-                const RoutineAuthTabWidget(),
+                RoutineAuthTabWidget(data: data),
                 RoutinePeopleTabWidget(data: data),
               ],
             ),

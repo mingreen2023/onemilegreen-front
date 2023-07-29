@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBarItem(
       backgroundColor: Colors.white,
       icon: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.only(bottom: 5),
         child: Image.asset(
           unselIcon,
           width: size,
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       activeIcon: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.only(bottom: 5),
         child: Image.asset(
           selIcon,
           width: size,

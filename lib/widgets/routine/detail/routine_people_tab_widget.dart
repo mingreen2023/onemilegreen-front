@@ -55,7 +55,7 @@ class RoutinePeopleTabWidget extends StatelessWidget {
               Images.routineJoinToCheck, // Replace with your image path
               width: 324.w,
               height: 42.h,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
             ),
           ),
         ]
@@ -89,7 +89,7 @@ class RoutineDetailJoinedStatusWidget extends StatelessWidget {
                     Images.routineAuthPlaceholder,
                     width: 100.w,
                     height: 100.h,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
               ),
@@ -108,8 +108,11 @@ class RoutineDetailJoinedStatusWidget extends StatelessWidget {
             Images.routineCheck,
             width: 324.w,
             height: 42.h,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
+        ),
+        SizedBox(
+          height: 50.h,
         ),
       ],
     );

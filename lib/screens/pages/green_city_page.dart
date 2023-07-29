@@ -1,12 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
-import 'package:onemilegreen_front/widgets/main_effect_widget.dart';
-import 'package:onemilegreen_front/widgets/main_user_info_widget.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/util/constants.dart';
+import 'package:onemilegreen_front/widgets/main/main_effect_widget.dart';
+import 'package:onemilegreen_front/widgets/main/main_user_info_widget.dart';
 
 class GreenCityPage extends StatefulWidget {
   const GreenCityPage({super.key});
@@ -33,25 +34,30 @@ class _GreenCityPageState extends State<GreenCityPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: margin_top,
-        ),
-        // Top - info
         Flexible(
           flex: 3,
-          child: FutureBuilder(
-              future: futureGreenStatus,
-              builder: (context, greenStatus) {
-                if (greenStatus.hasData) {
-                  return UserInfoWidget(
-                      nickName: '서하',
-                      userMileage: greenStatus.data!.userMileage.toString());
-                } else {
-                  return const Center();
-                }
-              }),
+          fit: FlexFit.tight,
+          child: Column(
+            children: [
+              SizedBox(
+                height: margin_top,
+              ),
+              // Top - info
+              FutureBuilder(
+                  future: futureGreenStatus,
+                  builder: (context, greenStatus) {
+                    if (greenStatus.hasData) {
+                      return UserInfoWidget(
+                          nickName: '서하',
+                          userMileage:
+                              greenStatus.data!.userMileage.toString());
+                    } else {
+                      return const Center();
+                    }
+                  }),
+            ],
+          ),
         ),
-
         // Middle~Bottom - swipe
         Flexible(
           flex: 7,
@@ -71,17 +77,19 @@ class _GreenCityPageState extends State<GreenCityPage> {
                             IndicatorWidget(
                                 controller: _controller, current: _current),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height / 40,
+                              height: 50.h,
                             ),
-                            Image.asset(Images.mainDistrict,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.fitWidth),
+                            Image.asset(
+                              Images.mainDistrict,
+                              width: MediaQuery.of(context).size.width,
+                              height: 277.h,
+                              fit: BoxFit.fitHeight,
+                            ),
                           ],
                         )
                     ],
                     carouselController: _controller,
                     options: CarouselOptions(
-                        // fix error !
                         height: double.maxFinite,
                         animateToClosest: true,
                         viewportFraction: 1.0,
@@ -184,10 +192,9 @@ class IndicatorWidget extends StatelessWidget {
           GestureDetector(
             onTap: () => _controller.animateToPage(index),
             child: Container(
-              width: 5.0,
-              height: 5.0,
-              margin:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+              width: 5.w,
+              height: 5.w,
+              margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark

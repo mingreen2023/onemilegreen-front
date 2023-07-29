@@ -14,17 +14,17 @@ class RoutineModel {
   final int isJoined;
 
   RoutineModel({
-    required this.rouId,
-    required this.rouName,
-    required this.rouStDate,
-    required this.rouEndDate,
-    required this.rouMileage,
-    required this.rouContent,
-    required this.rouEffect,
-    required this.rouDayofweek,
-    required this.rouUserCount,
-    required this.isFavorite,
-    required this.isJoined,
+    this.rouId = -1,
+    this.rouName = "",
+    this.rouStDate = "",
+    this.rouEndDate = "",
+    this.rouMileage = 0,
+    this.rouContent = "",
+    this.rouEffect = "",
+    this.rouDayofweek = "",
+    this.rouUserCount = 0,
+    this.isFavorite = 0,
+    this.isJoined = 0,
   });
 
   factory RoutineModel.fromJson(Map<String, dynamic> json) {

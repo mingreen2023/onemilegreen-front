@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/models/routine_single_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,8 +25,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage>
   Future<SingleRoutineModel> futureRoutineItem =
       DioServices.getRoutineItem(userNo: "1", rouId: 3);
 
-  // TODO: manage user info
-  String userName = "서하";
   late TabController _tabController;
 
   double tabBarHeight = 58;
@@ -88,23 +85,26 @@ class _RoutineDetailPageState extends State<RoutineDetailPage>
                   ],
                 );
               }
-              // TODO: fix loading effect
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Top - Routine info
-                  RoutineDetailTopInfoWidget(RoutineDetailModel()),
-
-                  RoutineCalWidget(RoutineDetailModel()),
-
-                  // TabBar >>>
-                  RoutineDetailTabViewWidget(
-                    tabBarHeight: tabBarHeight,
-                    tabController: _tabController,
-                    data: RoutineDetailModel(),
-                  ),
-                ],
+              return const Center(
+                child: CircularProgressIndicator(),
               );
+              // TODO: fix loading effect
+              // return Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     // Top - Routine info
+              //     RoutineDetailTopInfoWidget(RoutineDetailModel()),
+
+              //     RoutineCalWidget(RoutineDetailModel()),
+
+              //     // TabBar >>>
+              //     RoutineDetailTabViewWidget(
+              //       tabBarHeight: tabBarHeight,
+              //       tabController: _tabController,
+              //       data: RoutineDetailModel(),
+              //     ),
+              //   ],
+              // );
             }),
       ),
     );

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
 
 enum EffectType { Tree, Plastic, PaperCup }
@@ -85,4 +87,26 @@ CalculatedEffect pickRandomResult(int effect) {
   List<CalculatedEffect> calculatedEffects = effectCalculator(effect);
   int randomIndex = Random().nextInt(calculatedEffects.length);
   return calculatedEffects[randomIndex];
+}
+
+class Formatter {
+  static String formatDate(String date) {
+    logger.d(date);
+    String formattedDate = "";
+    DateTime parsedDate = DateTime.parse(date);
+    final formatter = DateFormat('M월 d일');
+    formattedDate = formatter.format(parsedDate);
+
+    return formattedDate;
+  }
+
+  static int calculateWeeks(String startDate, String endDate) {
+    DateTime start = DateTime.parse(startDate);
+    DateTime end = DateTime.parse(endDate);
+
+    int diffDays = end.difference(start).inDays;
+    int weeks = (diffDays / 7).floor();
+
+    return weeks;
+  }
 }

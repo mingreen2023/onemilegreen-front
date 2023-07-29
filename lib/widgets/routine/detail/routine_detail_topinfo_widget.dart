@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
-import 'package:onemilegreen_front/screens/pages/routine_detail_page.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
+import 'package:onemilegreen_front/util/util.dart';
 
 class RoutineDetailTopInfoWidget extends StatelessWidget {
   final RoutineDetailModel data;
@@ -14,11 +14,19 @@ class RoutineDetailTopInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d(data);
+    logger.d(data.rouDayofweek);
+    logger.d(data.rouStDate);
+    logger.d(data.rouEndDate);
+    logger.d(data.rouDetailList);
+    logger.d(data.rouDetailList?[0]);
+    logger.d(data.rouDetailList?[0].date);
+    logger.d(data.rouDetailList?[0].status);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${data.rouDayofweek} / ${data.rouStDate} - ${data.rouEndDate}",
+          "${data.rouDayofweek} / ${Formatter.calculateWeeks(data.rouStDate, data.rouEndDate)}주",
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
@@ -40,7 +48,7 @@ class RoutineDetailTopInfoWidget extends StatelessWidget {
           height: 23.h,
         ),
         Text(
-          "${data.rouStDate}부터 ${data.rouEndDate}",
+          "${Formatter.formatDate(data.rouStDate)}부터 ${Formatter.formatDate(data.rouEndDate)}까지",
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,

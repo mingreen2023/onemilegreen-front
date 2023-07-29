@@ -27,21 +27,20 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
           width: 37.w,
           height: 37.h,
           child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
               Image.asset(Images.calSuccess),
-              const Center(
-                child: Text(
-                  '27',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                '27',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
           ),
-        )
+        ),
       ],
     ]),
     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
