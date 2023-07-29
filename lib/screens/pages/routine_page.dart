@@ -5,11 +5,11 @@ import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/widgets/routine_list_item_widget.dart';
-import 'package:onemilegreen_front/widgets/routine_list_title_widget.dart';
-import 'package:onemilegreen_front/widgets/routine_mytitle_widget.dart';
-import 'package:onemilegreen_front/widgets/routine_notice_widget.dart';
-import 'package:onemilegreen_front/widgets/routine_summary_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_list_item_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_list_title_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_mytitle_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_notice_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/routine_summary_widget.dart';
 
 class RoutinePage extends StatefulWidget {
   const RoutinePage({super.key});
