@@ -85,8 +85,15 @@ class CustomTextStyle {
   );
 
   static TextStyle routineMytitle = TextStyle(
-    fontSize: 15.sp,
+    fontSize: 16.sp,
     color: primaryColor,
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle routineNeigbor = TextStyle(
+    color: primaryColor,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w300,
   );
 
   static TextStyle routineList = TextStyle(

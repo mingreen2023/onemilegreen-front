@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/colors.dart';
+import 'package:onemilegreen_front/util/theme.dart';
 
 class RoutineNoticeWidget extends StatelessWidget {
   final int joinCount;
@@ -20,9 +21,20 @@ class RoutineNoticeWidget extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Center(
-        child: Text(
-          "오늘은 $joinCount명의 이웃이 루틴을 수행했어요!",
-          style: Theme.of(context).textTheme.bodyMedium,
+        child: RichText(
+          text: TextSpan(
+            text: "오늘은 ",
+            style: CustomTextStyle.routineNeigbor,
+            children: <TextSpan>[
+              TextSpan(
+                text: "$joinCount명의 이웃",
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const TextSpan(text: "이 루틴을 수행했어요!"),
+            ],
+          ),
         ),
       ),
     );

@@ -27,6 +27,16 @@ class Images {
 // routine
   static const String routineJoined = "${imagePath}routine_joined.png";
   static const String routineNotJoined = "${imagePath}routine_not_joined.png";
+  static const String routineJoinToCheck = "${imagePath}btn_join_routine.png";
+  static const String routineCheck = "${imagePath}btn_check_routine.png";
+
+  static const String calSuccess = "${imagePath}cal_success.png";
+  static const String calNotTodo = "${imagePath}cal_not_todo.png";
+  static const String calTodo = "${imagePath}cal_todo.png";
+  static const String calFailed = "${imagePath}cal_failed.png";
+  static const String calToday = "${imagePath}cal_today.png";
+  static const String routineAuthPlaceholder =
+      "${imagePath}routine_auth_placeholder.png";
 
 // gathering
   static const String gatheringAdd = "${imagePath}gathering_add.png";

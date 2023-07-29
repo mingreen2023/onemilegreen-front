@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onemilegreen_front/models/routine_list_model.dart';
 import 'package:onemilegreen_front/models/routine_status_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
@@ -18,37 +19,12 @@ class RoutinePage extends StatefulWidget {
 }
 
 class _RoutinePageState extends State<RoutinePage> {
-  // temp
-  List<RoutineListItemWidget> widgetList = [
-    const RoutineListItemWidget(
-        isJoined: true,
-        schedule: "월,수,금 / 2주",
-        title: '하루 한끼 채식 먹기',
-        joinCount: 1633,
-        point: 500),
-    const RoutineListItemWidget(
-        isJoined: true,
-        schedule: "월,수,금 / 2주",
-        title: '하루 한끼 채식 먹기',
-        joinCount: 1633,
-        point: 500),
-    const RoutineListItemWidget(
-        isJoined: true,
-        schedule: "월,수,금 / 2주",
-        title: '하루 한끼 채식 먹기',
-        joinCount: 1633,
-        point: 500),
-    const RoutineListItemWidget(
-        isJoined: true,
-        schedule: "월,수,금 / 2주",
-        title: '하루 한끼 채식 먹기',
-        joinCount: 1633,
-        point: 500),
-  ];
-
   // TODO : refactoring
   Future<RoutineStatusModel> futureRoutineStatus =
       DioServices.getUserRoutineStatus(userNo: "1");
+
+  Future<RoutineListModel> futureRoutineList =
+      DioServices.getRoutineList(userNo: "1");
 
   // TODO: manage user info
   String userName = "서하";
@@ -81,29 +57,51 @@ class _RoutinePageState extends State<RoutinePage> {
                 const RoutinListTitleWidget("인기 루틴 목록"),
                 // popluar routine list
                 // start of popular routine list >>>
-                GridView.count(
-                  physics: const ScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  mainAxisSpacing: 1.0,
-                  crossAxisSpacing: 10.w,
-                  childAspectRatio: 155.w / 155.h,
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  children: widgetList,
-                ),
+                FutureBuilder(
+                    future: futureRoutineList,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.count(
+                          physics: const ScrollPhysics(),
+                          padding: const EdgeInsets.all(0),
+                          mainAxisSpacing: 1.0,
+                          crossAxisSpacing: 10.w,
+                          childAspectRatio: 155.w / 155.h,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          children: snapshot.data!.popularRoutineList
+                              .map((e) => RoutineListItemWidget(routine: e))
+                              .toList(),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }),
                 // recommand routine list
                 // start of recommand routine list >>>
                 const RoutinListTitleWidget("추천 루틴 목록"),
-                GridView.count(
-                  physics: const ScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  mainAxisSpacing: 1.0,
-                  crossAxisSpacing: 10.w,
-                  childAspectRatio: 155.w / 155.h,
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  children: widgetList,
-                ),
+                FutureBuilder(
+                    future: futureRoutineList,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.count(
+                          physics: const ScrollPhysics(),
+                          padding: const EdgeInsets.all(0),
+                          mainAxisSpacing: 1.0,
+                          crossAxisSpacing: 10.w,
+                          childAspectRatio: 155.w / 155.h,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          children: snapshot.data!.recommandRoutineList
+                              .map((e) => RoutineListItemWidget(routine: e))
+                              .toList(),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }),
               ],
             ),
           ),
@@ -115,6 +113,7 @@ class _RoutinePageState extends State<RoutinePage> {
 
 class RoutineTopWidget extends StatelessWidget {
   final RoutineStatusModel routineStatusModel;
+
   const RoutineTopWidget(
     this.routineStatusModel, {
     super.key,
@@ -144,7 +143,7 @@ class RoutineTopWidget extends StatelessWidget {
               total: routineStatusModel.routineTotal,
             ),
             SizedBox(
-              height: 6.h,
+              height: 13.h,
             ),
             Column(children: <Widget>[
               for (var routineTitle

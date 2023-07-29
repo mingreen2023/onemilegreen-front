@@ -5,7 +5,7 @@ class RoutineStatusModel extends BaseModel {
   final int routineInProgress;
   final int routineFinished;
   final int routineTotal;
-  final List<String> currentRoutineList;
+  final List<Map<String, dynamic>> currentRoutineList;
 
   RoutineStatusModel({
     required int code,
@@ -26,7 +26,8 @@ class RoutineStatusModel extends BaseModel {
       routineInProgress: data['routineInProgress'],
       routineFinished: data['routineFinished'],
       routineTotal: data['routineTotal'],
-      currentRoutineList: List<String>.from(data['currentRoutineList']),
+      currentRoutineList:
+          List<Map<String, dynamic>>.from(data['currentRoutineList']),
     );
   }
 }

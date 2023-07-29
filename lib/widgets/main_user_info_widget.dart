@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 
@@ -24,7 +25,13 @@ class UserInfoWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("$nickName님,"),
+              Text(
+                "$nickName님,",
+                style: TextStyle(
+                    fontSize: 18.w,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
               Text(
                 userMileage,
                 style: Theme.of(context).textTheme.headlineLarge,

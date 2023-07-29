@@ -8,5 +8,5 @@ const String myPage = "마이페이지";
 
 // size
 const double bottomIconSize = 24;
-double margin_top = 53.h;
+double margin_top = 54.h;
 double margin_side = 20.h;

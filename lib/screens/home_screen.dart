@@ -4,6 +4,7 @@ import 'package:onemilegreen_front/screens/pages/green_city_page.dart';
 import 'package:onemilegreen_front/screens/pages/my_page.dart';
 import 'package:onemilegreen_front/screens/pages/routine_page.dart';
 import 'package:onemilegreen_front/util/constants.dart';
+import 'package:onemilegreen_front/util/images.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,37 +42,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             barItemBuilder(
-                selIcon: 'bt_green_city_active', // TODO: replace icon
-                unselIcon: 'bt_green_city',
+                selIcon: Images.btGreenCityActive,
+                unselIcon: Images.btGreenCity,
                 label: greenSeoul,
                 size: bottomIconSize),
             barItemBuilder(
-                selIcon: 'bt_routine_active',
-                unselIcon: 'bt_routine',
+                selIcon: Images.btRoutineActive,
+                unselIcon: Images.btRoutine,
                 label: routine,
                 size: bottomIconSize),
-            // TODO: fix icon later
-            const BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                child: Icon(
-                  Icons.people_outline_rounded,
-                  size: bottomIconSize,
-                ),
-              ),
-              activeIcon: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
-                child: Icon(
-                  Icons.people_outline_rounded,
-                  size: bottomIconSize,
-                ),
-              ),
-              label: gathering,
-            ),
             barItemBuilder(
-                selIcon: 'bt_mypage_active',
-                unselIcon: 'bt_mypage',
+                selIcon: Images.btGatheringActive,
+                unselIcon: Images.btGathering,
+                label: gathering,
+                size: bottomIconSize),
+            barItemBuilder(
+                selIcon: Images.btMypageActive,
+                unselIcon: Images.btMypage,
                 label: myPage,
                 size: bottomIconSize - 5),
           ],
@@ -93,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       icon: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Image(
-          image: AssetImage('assets/images/$unselIcon.png'),
+        child: Image.asset(
+          unselIcon,
           width: size,
           height: size,
         ),
@@ -102,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       activeIcon: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Image.asset(
-          'assets/images/$selIcon.png',
+          selIcon,
           width: size,
           height: size,
         ),

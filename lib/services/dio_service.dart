@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
+import 'package:onemilegreen_front/models/routine_join_result.dart';
+import 'package:onemilegreen_front/models/routine_list_model.dart';
+import 'package:onemilegreen_front/models/routine_single_model.dart';
 import 'package:onemilegreen_front/models/routine_status_model.dart';
 
 var logger = Logger();
@@ -18,6 +21,9 @@ class DioServices {
   /// routine/userRoutine/status
   static const String routine = "routine";
   static const String userRoutine = "userRoutine";
+  static const String routineList = "routineList";
+  static const String routineItem = "routineItem";
+  static const String joinRoutine = "joinRoutine";
 
   static Dio _dio = Dio();
 
@@ -96,9 +102,9 @@ class DioServices {
     }
   }
 
-  static Future<RoutineStatusModel> getRoutineList(
+  static Future<RoutineListModel> getRoutineList(
       {required String userNo}) async {
-    final url = "$baseUrl/$routine/$userRoutine/$status";
+    final url = "$baseUrl/$routine/$routineList";
     try {
       Map<String, dynamic> data = {
         "userNo": userNo,
@@ -108,7 +114,68 @@ class DioServices {
       if (response.data["code"] == 200) {
         logger.d(response.data);
 
-        return RoutineStatusModel.fromJson(response.data);
+        return RoutineListModel.fromJson(response.data);
+      } else {
+        return response.data["message"];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+
+      return e.response?.data;
+    }
+  }
+
+  static Future<SingleRoutineModel> getRoutineItem(
+      {required String userNo, required int rouId}) async {
+    final url = "$baseUrl/$routine/$routineItem";
+    try {
+      Map<String, dynamic> data = {
+        "user_no": userNo,
+        "rou_id": rouId,
+      };
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+
+        return SingleRoutineModel.fromJson(response.data);
+      } else {
+        return response.data["message"];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+
+      return e.response?.data;
+    }
+  }
+
+  ///routine/joinRoutine
+  static Future<RoutineJoinResultModel> insertRoutine(
+      {required String userNo, required int rouId}) async {
+    final url = "$baseUrl/$routine/$joinRoutine";
+    try {
+      Map<String, dynamic> data = {
+        "user_no": userNo,
+        "routine_id": rouId,
+      };
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+
+        return RoutineJoinResultModel.fromJson(response.data);
       } else {
         return response.data["message"];
       }
