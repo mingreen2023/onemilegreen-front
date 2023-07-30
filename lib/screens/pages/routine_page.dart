@@ -92,7 +92,7 @@ class _RoutinePageState extends State<RoutinePage> {
                       );
                     }
                     return Shimmer.fromColors(
-                      baseColor: cardColor,
+                      baseColor: OmgColors.cardColor,
                       highlightColor: Colors.white,
                       child: const RoutineShimmerPage(),
                     );

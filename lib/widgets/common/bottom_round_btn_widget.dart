@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 
-class PrimaryColorRoundButtonWidget extends StatelessWidget {
+class BottomRoundButtonWidget extends StatelessWidget {
   final String text;
   final double w;
   Color textColor;
   Color borderColor;
   Color bgColor;
 
-  PrimaryColorRoundButtonWidget(
+  BottomRoundButtonWidget(
     this.text, {
     this.w = double.maxFinite,
     this.textColor = Colors.white,
-    this.borderColor = primaryColor,
-    this.bgColor = primaryColor,
+    this.borderColor = OmgColors.primaryColor,
+    this.bgColor = OmgColors.primaryColor,
     super.key,
   });
 

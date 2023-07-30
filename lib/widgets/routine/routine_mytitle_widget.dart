@@ -49,7 +49,7 @@ class RoutineMyTitleWidget extends StatelessWidget {
             width: 7.h,
             child: Image.asset(
               Images.chevronForward,
-              color: primaryColor,
+              color: OmgColors.primaryColor,
             ),
           ),
         ]),

@@ -4,6 +4,7 @@ import 'package:onemilegreen_front/models/routnine_get_userauth_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_all_user_detail_widget.dart';
 
@@ -13,7 +14,7 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
 
   BoxDecoration buildContainerDecoration() {
     return BoxDecoration(
-      border: Border.all(color: cardColor),
+      border: Border.all(color: OmgColors.cardColor),
       borderRadius: BorderRadius.circular(5),
     );
   }
@@ -40,7 +41,7 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
                     margin: EdgeInsets.only(right: 5.w),
                     decoration: buildContainerDecoration(),
                     child: ImageLoaderWidget(
-                      routineDetail.urdImage,
+                      "${Util.domain}${routineDetail.urdImage}",
                     ),
                   );
                 }).toList(),

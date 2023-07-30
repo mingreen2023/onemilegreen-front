@@ -20,8 +20,8 @@ class RoutineDetailModel {
   RoutineDetailModel({
     this.rouId = -1,
     this.rouName = "   ",
-    this.rouStDate = "          ",
-    this.rouEndDate = "          ",
+    this.rouStDate = "2023-07-27",
+    this.rouEndDate = "2023-07-27",
     this.rouMileage = 0,
     this.rouContent = "",
     this.rouEffect = "",

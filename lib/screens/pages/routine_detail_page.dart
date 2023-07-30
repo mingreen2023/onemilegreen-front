@@ -3,9 +3,11 @@ import 'package:onemilegreen_front/models/routine_single_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/constants.dart';
+import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_detail_tabview_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_detail_topinfo_widget.dart';
+import 'package:onemilegreen_front/widgets/routine/detail/routine_shimmer_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_week_cal_widget.dart';
 
 class RoutineDetailPage extends StatefulWidget {
@@ -79,26 +81,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage>
                   ],
                 );
               }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-              // TODO: fix loading effect
-              // return Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     // Top - Routine info
-              //     RoutineDetailTopInfoWidget(RoutineDetailModel()),
-
-              //     RoutineCalWidget(RoutineDetailModel()),
-
-              //     // TabBar >>>
-              //     RoutineDetailTabViewWidget(
-              //       tabBarHeight: tabBarHeight,
-              //       tabController: _tabController,
-              //       data: RoutineDetailModel(),
-              //     ),
-              //   ],
-              // );
+              return Util.ShimmerBuilder(const RoutineDetailShimmerWidget());
             }),
       ),
     );

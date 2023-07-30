@@ -59,7 +59,7 @@ class _CommunityPageState extends State<CommunityPage>
         Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: cardColor, width: 1.w),
+              bottom: BorderSide(color: OmgColors.cardColor, width: 1.w),
             ),
           ),
           child: TabBarWidget("우리구 모임", "내 모임", tabController: _tabController),
@@ -91,7 +91,7 @@ class _CommunityPageState extends State<CommunityPage>
                                 style: TextStyle(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: secondCategoryColor,
+                                  color: OmgColors.secondCategoryColor,
                                 ),
                               ),
                         SizedBox(width: 19.w),

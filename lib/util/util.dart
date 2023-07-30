@@ -1,8 +1,24 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
+import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:shimmer/shimmer.dart';
+
+class Util {
+  static final domain = dotenv.get("S3_DOMAIN");
+
+  static Widget ShimmerBuilder(Widget widget) {
+    return Shimmer.fromColors(
+      baseColor: OmgColors.cardColor,
+      highlightColor: Colors.white,
+      child: widget,
+    );
+  }
+}
 
 enum EffectType { Tree, Plastic, PaperCup }
 

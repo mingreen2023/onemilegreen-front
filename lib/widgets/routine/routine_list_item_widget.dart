@@ -58,7 +58,7 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
           border: Border(
             bottom: BorderSide(
               width: 1,
-              color: checkBefore,
+              color: OmgColors.checkBefore,
             ),
           ),
         ),
@@ -103,24 +103,28 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
                 ),
                 if (widget.originalJoin) ...[
                   IconButton(
-                    iconSize: 30.w, //for web build
+                    iconSize: 30.w,
                     onPressed: onPressed,
                     padding: EdgeInsets.only(right: 7.w),
-                    icon: Image.asset(
-                      Images.routineJoined,
-                      width: 30,
-                      height: 30,
+                    icon: Center(
+                      child: Image.asset(
+                        Images.routineJoined,
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ),
                 ] else ...[
                   IconButton(
-                    iconSize: 30.w, //for web build
+                    iconSize: 30.w,
                     onPressed: onPressed,
                     padding: EdgeInsets.only(right: 7.w),
-                    icon: Image.asset(
-                      Images.routineNotJoined,
-                      width: 30,
-                      height: 30,
+                    icon: Center(
+                      child: Image.asset(
+                        Images.routineNotJoined,
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ),
                 ]

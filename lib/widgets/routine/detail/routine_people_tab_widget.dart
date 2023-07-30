@@ -36,7 +36,7 @@ class RoutinePeopleTabWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.normal,
-            color: titleGreyColor,
+            color: OmgColors.titleGreyColor,
           ),
         ),
         SizedBox(

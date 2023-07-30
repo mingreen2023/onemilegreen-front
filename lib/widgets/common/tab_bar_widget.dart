@@ -44,9 +44,9 @@ class TabBarWidget extends StatelessWidget {
         ),
       ],
       indicatorWeight: 1.5,
-      indicatorColor: primaryColor,
+      indicatorColor: OmgColors.primaryColor,
       labelColor: Colors.black,
-      unselectedLabelColor: lightGreyColor,
+      unselectedLabelColor: OmgColors.lightGreyColor,
       controller: tabController,
     );
   }

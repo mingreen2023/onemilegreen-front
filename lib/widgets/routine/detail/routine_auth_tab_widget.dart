@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 
 class RoutineAuthTabWidget extends StatelessWidget {
@@ -36,7 +37,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.normal,
-            color: titleGreyColor,
+            color: OmgColors.titleGreyColor,
           ),
         ),
         SizedBox(
@@ -50,11 +51,11 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 width: 154.w,
                 height: 154.w,
                 decoration: BoxDecoration(
-                  border: Border.all(color: cardColor),
+                  border: Border.all(color: OmgColors.cardColor),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: ImageLoaderWidget(
-                  data.rouNpImg,
+                  "${Util.domain}${data.rouNpImg}",
                 ),
               ),
               Positioned(
@@ -75,11 +76,11 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 width: 154.w,
                 height: 154.w,
                 decoration: BoxDecoration(
-                  border: Border.all(color: cardColor),
+                  border: Border.all(color: OmgColors.cardColor),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: ImageLoaderWidget(
-                  data.rouPassImg,
+                  "${Util.domain}${data.rouPassImg}",
                 ),
               ),
               Positioned(
@@ -100,7 +101,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
         Container(
           width: double.maxFinite,
           height: 71.h,
-          color: textGreyColor,
+          color: OmgColors.textGreyColor,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
@@ -108,7 +109,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w300,
-                color: mainSecondTextColor,
+                color: OmgColors.mainSecondTextColor,
                 height: 1.5,
               ),
             ),

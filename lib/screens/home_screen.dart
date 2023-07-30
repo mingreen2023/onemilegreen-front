@@ -84,18 +84,22 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       icon: Padding(
         padding: const EdgeInsets.only(bottom: 5),
-        child: Image.asset(
-          unselIcon,
-          width: size,
-          height: size,
+        child: Center(
+          child: Image.asset(
+            unselIcon,
+            width: size,
+            height: size,
+          ),
         ),
       ),
       activeIcon: Padding(
         padding: const EdgeInsets.only(bottom: 5),
-        child: Image.asset(
-          selIcon,
-          width: size,
-          height: size,
+        child: Center(
+          child: Image.asset(
+            selIcon,
+            width: size,
+            height: size,
+          ),
         ),
       ),
       label: label,

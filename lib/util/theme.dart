@@ -5,8 +5,8 @@ import 'package:onemilegreen_front/util/colors.dart';
 ThemeData theme() {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    primaryColor: primaryColor,
-    cardColor: cardColor,
+    primaryColor: OmgColors.primaryColor,
+    cardColor: OmgColors.cardColor,
     bottomNavigationBarTheme: bottomNavigationBarTheme(),
     textTheme: textTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -18,7 +18,7 @@ BottomNavigationBarThemeData bottomNavigationBarTheme() {
   return const BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: Colors.black,
-    unselectedItemColor: unselectedBottonMenu,
+    unselectedItemColor: OmgColors.unselectedBottonMenu,
     showSelectedLabels: true,
     showUnselectedLabels: true,
     backgroundColor: Colors.white,
@@ -27,7 +27,7 @@ BottomNavigationBarThemeData bottomNavigationBarTheme() {
       fontSize: 14,
     ),
     unselectedLabelStyle: TextStyle(
-      color: unselectedBottonMenu,
+      color: OmgColors.unselectedBottonMenu,
       fontSize: 12,
     ),
   );
@@ -50,7 +50,7 @@ TextTheme textTheme() {
       fontSize: 24,
     ),
     labelMedium: const TextStyle(
-      color: mainSecondTextColor,
+      color: OmgColors.mainSecondTextColor,
       fontSize: 16,
     ),
     titleLarge: const TextStyle(
@@ -73,38 +73,38 @@ TextTheme textTheme() {
 class CustomTextStyle {
   static TextStyle routineMsg = TextStyle(
     fontSize: 16.sp,
-    color: primaryColor,
+    color: OmgColors.primaryColor,
   );
   static TextStyle routineStatusLabel = TextStyle(
     fontSize: 12.sp,
-    color: secondPrimaryColor,
+    color: OmgColors.secondPrimaryColor,
   );
   static TextStyle routineStatus = TextStyle(
     fontSize: 20.sp,
-    color: primaryColor,
+    color: OmgColors.primaryColor,
   );
 
   static TextStyle routineMytitle = TextStyle(
     fontSize: 16.sp,
-    color: primaryColor,
+    color: OmgColors.primaryColor,
     fontWeight: FontWeight.w500,
   );
 
   static TextStyle routineNeigbor = TextStyle(
-    color: primaryColor,
+    color: OmgColors.primaryColor,
     fontSize: 16.sp,
     fontWeight: FontWeight.w300,
   );
 
   static TextStyle routineList = TextStyle(
     fontSize: 16.sp,
-    color: mainSecondTextColor,
+    color: OmgColors.mainSecondTextColor,
     fontWeight: FontWeight.w300,
   );
 
   static TextStyle routineItemDate = TextStyle(
     fontSize: 13.sp,
-    color: middleGreyColor,
+    color: OmgColors.middleGreyColor,
     fontWeight: FontWeight.w500,
   );
 
@@ -122,7 +122,7 @@ class CustomTextStyle {
 
   static TextStyle routineItemPoint = TextStyle(
     fontSize: 12.sp,
-    color: lightGreyColor,
+    color: OmgColors.lightGreyColor,
     fontWeight: FontWeight.w400,
   );
 }

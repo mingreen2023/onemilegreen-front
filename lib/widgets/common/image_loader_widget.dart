@@ -28,10 +28,10 @@ class ImageLoaderWidget extends StatelessWidget {
       width: width ?? 156.w,
       height: height ?? 156.w,
       placeholder: (context, url) => Shimmer.fromColors(
-        baseColor: cardColor,
+        baseColor: OmgColors.cardColor,
         highlightColor: Colors.white,
         child: Container(
-          color: cardColor,
+          color: OmgColors.cardColor,
         ),
       ),
       errorWidget: (context, url, error) => const Icon(Icons.error),

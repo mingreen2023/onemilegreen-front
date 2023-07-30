@@ -30,7 +30,7 @@ class RoutineDetailTopInfoWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
-            color: scheduleLabelColor,
+            color: OmgColors.scheduleLabelColor,
           ),
         ),
         SizedBox(

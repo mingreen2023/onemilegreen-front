@@ -78,7 +78,7 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
         Container(
           decoration: const BoxDecoration(
             border: Border(
-              top: BorderSide(color: lineGreyColor),
+              top: BorderSide(color: OmgColors.lineGreyColor),
             ),
           ),
           padding: EdgeInsets.only(
@@ -90,7 +90,7 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
               IconButton(
                 padding: const EdgeInsets.all(0),
                 icon: ImageIcon(
-                  color: arrowGreyColor,
+                  color: OmgColors.arrowGreyColor,
                   const AssetImage(
                     Images.chevronBack,
                   ),
@@ -118,7 +118,7 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
               IconButton(
                 padding: const EdgeInsets.all(0),
                 icon: ImageIcon(
-                  color: arrowGreyColor,
+                  color: OmgColors.arrowGreyColor,
                   const AssetImage(
                     Images.chevronForward,
                   ),

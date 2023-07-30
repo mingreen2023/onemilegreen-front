@@ -17,7 +17,7 @@ class RoutineNoticeWidget extends StatelessWidget {
       height: 48.h,
       width: double.maxFinite,
       decoration: const BoxDecoration(
-        color: cardColor,
+        color: OmgColors.cardColor,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Center(

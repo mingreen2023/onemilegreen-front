@@ -104,7 +104,7 @@ class _GreenCityPageState extends State<GreenCityPage> {
                 }
                 return const Center(
                   child: CircularProgressIndicator(
-                    color: primaryColor,
+                    color: OmgColors.primaryColor,
                   ),
                 );
               }),

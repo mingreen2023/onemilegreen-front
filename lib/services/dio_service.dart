@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:onemilegreen_front/models/community_detail_model.dart';
 import 'package:onemilegreen_front/models/community_model.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/models/routine_join_result.dart';
@@ -20,7 +21,7 @@ class DioServices {
   static const String greenSeoul = "greenseoul";
   static const String status = "status";
 
-  /// routine/userRoutine/status
+  ///routine
   static const String routine = "routine";
   static const String userRoutine = "userRoutine";
   static const String routineList = "routineList";
@@ -28,10 +29,11 @@ class DioServices {
   static const String joinRoutine = "joinRoutine";
   static const String findAllUserRoutine = "findAllUserRoutine";
 
-  // community/communityList
+  //community
   static const String community = "community";
   static const String communityList = "communityList";
   static const String myCommunityList = "myCommunityList";
+  static const String communityItem = "communityItem";
 
   static Dio _dio = Dio();
 
@@ -41,7 +43,7 @@ class DioServices {
       connectTimeout: const Duration(milliseconds: 10000),
       receiveTimeout: const Duration(milliseconds: 10000),
       sendTimeout: const Duration(milliseconds: 10000),
-      // headers: {},
+      //headers: {},
     );
     _dio = Dio(options);
     _dio.interceptors.add(DioInterceptor());
@@ -51,247 +53,143 @@ class DioServices {
     return _dio;
   }
 
+  static Future<T> _performPost<T>({
+    required String url,
+    required Map<String, dynamic> data,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
+    try {
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+        return fromJson(response.data);
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+      rethrow;
+    }
+  }
+
+//greenSeoul/status
   static Future<GreenSeoulStatusModel> getGreenSeoulStatus(
-      {required String userNo}) async {
-    final url = "$baseUrl/$greenSeoul/$status";
-    try {
-      Map<String, dynamic> data = {
-        "userNo": userNo,
-      };
-      final response = await _dio.post(url, data: data);
+          {required String userNo}) =>
+      _performPost(
+        url: "$baseUrl/$greenSeoul/$status",
+        data: {
+          "userNo": userNo,
+        },
+        fromJson: (data) => GreenSeoulStatusModel.fromJson(data),
+      );
 
-      logger.d(response.data);
-
-      if (response.data["code"] == 200) {
-        return GreenSeoulStatusModel.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response!.data;
-    }
-  }
-
+//routine/userRoutine/status
   static Future<RoutineStatusModel> getUserRoutineStatus(
-      {required String userNo}) async {
-    final url = "$baseUrl/$routine/$userRoutine/$status";
-    try {
-      Map<String, dynamic> data = {
-        "userNo": userNo,
-      };
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
+          {required String userNo}) =>
+      _performPost(
+        url: "$baseUrl/$routine/$userRoutine/$status",
+        data: {
+          "userNo": userNo,
+        },
+        fromJson: (data) => RoutineStatusModel.fromJson(data),
+      );
 
-        return RoutineStatusModel.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
+//routine/routineList
+  static Future<RoutineListModel> getRoutineList({required String userNo}) =>
+      _performPost(
+        url: "$baseUrl/$routine/$routineList",
+        data: {
+          "userNo": userNo,
+        },
+        fromJson: (data) => RoutineListModel.fromJson(data),
+      );
 
-      return e.response?.data;
-    }
-  }
+//routine/routineItem
+  static Future<SingleRoutineModel> getRoutineItem({
+    required String userNo,
+    required int rouId,
+  }) =>
+      _performPost(
+        url: "$baseUrl/$routine/$routineItem",
+        data: {
+          "user_no": userNo,
+          "rou_id": rouId,
+        },
+        fromJson: (data) => SingleRoutineModel.fromJson(data),
+      );
 
-  static Future<RoutineListModel> getRoutineList(
-      {required String userNo}) async {
-    final url = "$baseUrl/$routine/$routineList";
-    try {
-      Map<String, dynamic> data = {
-        "userNo": userNo,
-      };
+//routine/joinRoutine
+  static Future<RoutineJoinResultModel> insertRoutine({
+    required String userNo,
+    required int rouId,
+  }) =>
+      _performPost(
+        url: "$baseUrl/$routine/$joinRoutine",
+        data: {
+          "user_no": userNo,
+          "routine_id": rouId,
+        },
+        fromJson: (data) => RoutineJoinResultModel.fromJson(data),
+      );
 
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
+//routine/findAllUserRoutine
+  static Future<GetUserAuth> getAllUserRoutine({required int rouId}) async =>
+      _performPost(
+        url: "$baseUrl/$routine/$findAllUserRoutine",
+        data: {
+          "routine_id": rouId,
+        },
+        fromJson: (data) => GetUserAuth.fromJson(data),
+      );
 
-        return RoutineListModel.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
-
-  static Future<SingleRoutineModel> getRoutineItem(
-      {required String userNo, required int rouId}) async {
-    final url = "$baseUrl/$routine/$routineItem";
-    try {
-      Map<String, dynamic> data = {
-        "user_no": userNo,
-        "rou_id": rouId,
-      };
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-
-        return SingleRoutineModel.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
-
-  ///routine/joinRoutine
-  static Future<RoutineJoinResultModel> insertRoutine(
-      {required String userNo, required int rouId}) async {
-    final url = "$baseUrl/$routine/$joinRoutine";
-    try {
-      Map<String, dynamic> data = {
-        "user_no": userNo,
-        "routine_id": rouId,
-      };
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-
-        return RoutineJoinResultModel.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
-
-  //routine/findAllUserRoutine
-  static Future<GetUserAuth> getAllUserRoutine({required int rouId}) async {
-    final url = "$baseUrl/$routine/$findAllUserRoutine";
-    try {
-      Map<String, dynamic> data = {
-        "routine_id": rouId,
-      };
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-
-        return GetUserAuth.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
-
-  // community/communityList
-  static Future<CommunityListResponse> getCommunityList(
-      {required int userNo, required category}) async {
-    final url = "$baseUrl/$community/$communityList";
-    try {
-      Map<String, dynamic> data = {
-        "userNo": userNo,
-        "category": category,
-      };
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-
-        return CommunityListResponse.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
+//community/communityList
+  static Future<CommunityListResponse> getCommunityList({
+    required int userNo,
+    required category,
+  }) async =>
+      _performPost(
+        url: "$baseUrl/$community/$communityList",
+        data: {
+          "userNo": userNo,
+          "category": category,
+        },
+        fromJson: (data) => CommunityListResponse.fromJson(data),
+      );
 
 //community/myCommunityList
-  static Future<CommunityListResponse> getMyCommunityList(
-      {required int userNo, required category}) async {
-    final url = "$baseUrl/$community/my/communityList";
-    try {
-      Map<String, dynamic> data = {
-        "userNo": userNo,
-        "category": category,
-      };
+  static Future<CommunityListResponse> getMyCommunityList({
+    required int userNo,
+    required category,
+  }) async =>
+      _performPost(
+        url: "$baseUrl/$community/my/communityList",
+        data: {
+          "userNo": userNo,
+          "category": category,
+        },
+        fromJson: (data) => CommunityListResponse.fromJson(data),
+      );
 
-      final response = await _dio.post(url, data: data);
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-
-        return CommunityListResponse.fromJson(response.data);
-      } else {
-        return response.data["message"];
-      }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-
-      return e.response?.data;
-    }
-  }
+//community/communityItem
+  static Future<CommunityItemResponse> getCoummunityDetail({
+    required int userNo,
+    required int com_id,
+  }) async =>
+      _performPost(
+        url: "$baseUrl/$community/$communityItem",
+        data: {
+          "userNo": userNo,
+          "com_id": com_id,
+        },
+        fromJson: (data) => CommunityItemResponse.fromJson(data),
+      );
 }
 
 class DioInterceptor extends Interceptor {

@@ -27,7 +27,7 @@ class RoutineShimmerPage extends StatelessWidget {
               // routine summary box
               Container(
                 decoration: const BoxDecoration(
-                  color: cardColor,
+                  color: OmgColors.cardColor,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Column(children: [

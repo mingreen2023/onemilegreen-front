@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routnine_get_userauth_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 
@@ -69,7 +70,7 @@ class _RoutineAllUserDetailWidgetState
                         ),
                         child: Center(
                           child: ImageLoaderWidget(
-                            item.urdImage,
+                            "${Util.domain}${item.urdImage}",
                             fit: BoxFit.cover,
                             width: 300.w,
                             height: 510.h,
