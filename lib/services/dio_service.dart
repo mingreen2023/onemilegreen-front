@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:onemilegreen_front/models/community_model.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/models/routine_join_result.dart';
 import 'package:onemilegreen_front/models/routine_list_model.dart';
 import 'package:onemilegreen_front/models/routine_single_model.dart';
 import 'package:onemilegreen_front/models/routine_status_model.dart';
+import 'package:onemilegreen_front/models/routnine_get_userauth_model.dart';
 
 var logger = Logger();
 
@@ -24,6 +26,11 @@ class DioServices {
   static const String routineList = "routineList";
   static const String routineItem = "routineItem";
   static const String joinRoutine = "joinRoutine";
+  static const String findAllUserRoutine = "findAllUserRoutine";
+
+  // community/communityList
+  static const String community = "community";
+  static const String communityList = "communityList";
 
   static Dio _dio = Dio();
 
@@ -176,6 +183,66 @@ class DioServices {
         logger.d(response.data);
 
         return RoutineJoinResultModel.fromJson(response.data);
+      } else {
+        return response.data["message"];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+
+      return e.response?.data;
+    }
+  }
+
+  //routine/findAllUserRoutine
+  static Future<GetUserAuth> getAllUserRoutine({required int rouId}) async {
+    final url = "$baseUrl/$routine/$findAllUserRoutine";
+    try {
+      Map<String, dynamic> data = {
+        "routine_id": rouId,
+      };
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+
+        return GetUserAuth.fromJson(response.data);
+      } else {
+        return response.data["message"];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+
+      return e.response?.data;
+    }
+  }
+
+  // community/communityList
+  static Future<CommunityListResponse> getCommunityList(
+      {required int userNo, required category}) async {
+    final url = "$baseUrl/$community/$communityList";
+    try {
+      Map<String, dynamic> data = {
+        "userNo": userNo,
+        "category": category,
+      };
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+
+        return CommunityListResponse.fromJson(response.data);
       } else {
         return response.data["message"];
       }

@@ -11,8 +11,8 @@ class Images {
   static const String btGreenCity = "${imagePath}bt_green_city.png";
   static const String btRoutineActive = "${imagePath}bt_routine_active.png";
   static const String btRoutine = "${imagePath}bt_routine.png";
-  static const String btGatheringActive = "${imagePath}bt_gathering_active.png";
-  static const String btGathering = "${imagePath}bt_gathering.png";
+  static const String btCommunityActive = "${imagePath}bt_gathering_active.png";
+  static const String btCommunity = "${imagePath}bt_gathering.png";
   static const String btMypage = "${imagePath}bt_mypage.png";
   static const String btMypageActive = "${imagePath}bt_mypage_active.png";
 
@@ -37,6 +37,8 @@ class Images {
   static const String calToday = "${imagePath}cal_today.png";
   static const String routineAuthPlaceholder =
       "${imagePath}routine_auth_placeholder.png";
+  static const String iconHeartFill = "${imagePath}icon_heart_fill.png";
+  static const String iconHeartOutlined = "${imagePath}icon_heart_outline.png";
 
 // gathering
   static const String gatheringAdd = "${imagePath}gathering_add.png";
@@ -44,10 +46,11 @@ class Images {
   static const String gatheringPersonB = "${imagePath}gathering_person_b.png";
   static const String gatheringPersonW = "${imagePath}gathering_person_w.png";
 
-// general
+// common
   static const String arrowBack = "${imagePath}arrow_back.png";
   static const String iconO = "${imagePath}icon_o.png";
   static const String iconX = "${imagePath}icon_x.png";
   static const String chevronBack = "${imagePath}chevron_back.png";
   static const String chevronForward = "${imagePath}chevron_forward.png";
+  static const String iconDots = "${imagePath}icon_dots.png";
 }

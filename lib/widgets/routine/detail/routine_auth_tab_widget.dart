@@ -47,7 +47,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
             Stack(children: [
               Container(
                 width: 154.w,
-                height: 154.h,
+                height: 154.w,
                 decoration: BoxDecoration(
                   border: Border.all(color: cardColor),
                   borderRadius: BorderRadius.circular(5),
@@ -58,12 +58,12 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 10..h,
+                bottom: 10.h,
                 right: 10.w,
-                child: SizedBox(
+                child: Image.asset(
+                  Images.iconX,
                   width: 30.w,
-                  height: 30.h,
-                  child: Image.asset(Images.iconX),
+                  height: 30.w,
                 ),
               ),
             ]),
@@ -73,7 +73,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
             Stack(children: [
               Container(
                 width: 154.w,
-                height: 154.h,
+                height: 154.w,
                 decoration: BoxDecoration(
                   border: Border.all(color: cardColor),
                   borderRadius: BorderRadius.circular(5),
@@ -84,12 +84,12 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 10..h,
+                bottom: 10.h,
                 right: 10.w,
-                child: SizedBox(
+                child: Image.asset(
+                  Images.iconO,
                   width: 30.w,
-                  height: 30.h,
-                  child: Image.asset(Images.iconO),
+                  height: 30.w,
                 ),
               ),
             ]),

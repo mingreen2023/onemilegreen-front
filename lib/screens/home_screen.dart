@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:onemilegreen_front/screens/pages/gathering_page.dart';
+import 'package:onemilegreen_front/screens/pages/community_page.dart';
 import 'package:onemilegreen_front/screens/pages/green_city_page.dart';
 import 'package:onemilegreen_front/screens/pages/my_page.dart';
 import 'package:onemilegreen_front/screens/pages/routine_page.dart';
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     GreenCityPage(),
     RoutinePage(),
-    GatheringPage(),
+    CommunityPage(),
     MyPage(),
   ];
 
@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: routine,
                 size: bottomIconSize),
             barItemBuilder(
-                selIcon: Images.btGatheringActive,
-                unselIcon: Images.btGathering,
-                label: gathering,
+                selIcon: Images.btCommunityActive,
+                unselIcon: Images.btCommunity,
+                label: community,
                 size: bottomIconSize),
             barItemBuilder(
                 selIcon: Images.btMypageActive,

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onemilegreen_front/util/images.dart';
 
 class BackArrowAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String leadingImageAsset;
-  final Function onPressedLeadingIcon;
 
   const BackArrowAppBar({
     super.key,
     required this.title,
-    required this.leadingImageAsset,
-    required this.onPressedLeadingIcon,
   });
 
   @override
@@ -20,20 +18,19 @@ class BackArrowAppBar extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: Colors.black,
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 16, // replace with your scaled size
+        style: TextStyle(
+          fontSize: 16.sp, // replace with your scaled size
           fontWeight: FontWeight.w600,
         ),
       ),
       leading: IconButton(
-        padding:
-            const EdgeInsets.only(left: 14), // replace with your scaled size
+        padding: EdgeInsets.only(left: 14.w), // replace with your scaled size
         icon: SizedBox(
-          width: 16, // replace with your scaled size
-          height: 16, // replace with your scaled size
-          child: Image.asset(leadingImageAsset),
+          width: 16.w,
+          height: 16.w,
+          child: Image.asset(Images.arrowBack),
         ),
-        onPressed: () => onPressedLeadingIcon(),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }

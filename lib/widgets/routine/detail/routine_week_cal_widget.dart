@@ -51,12 +51,12 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
           child: Stack(
             children: <Widget>[
               Image.asset(Images.calSuccess),
-              const Center(
+              Center(
                 child: Text(
                   '27',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20.0,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -82,17 +82,19 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
             ),
           ),
           padding: EdgeInsets.only(
-            top: 27.h,
+            top: 17.h, //+ image icon top padding = 27
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: const ImageIcon(
+                padding: const EdgeInsets.all(0),
+                icon: ImageIcon(
                   color: arrowGreyColor,
-                  AssetImage(
+                  const AssetImage(
                     Images.chevronBack,
                   ),
+                  size: 16.h,
                 ),
                 iconSize: 11.h,
                 onPressed: () {
@@ -100,7 +102,7 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
                 },
               ),
               SizedBox(
-                width: 24.w,
+                width: 14.w,
               ),
               Text(
                 "루틴 ${_current + 1}주차",
@@ -111,14 +113,16 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
                 ),
               ),
               SizedBox(
-                width: 24.w,
+                width: 14.w,
               ),
               IconButton(
-                icon: const ImageIcon(
+                padding: const EdgeInsets.all(0),
+                icon: ImageIcon(
                   color: arrowGreyColor,
-                  AssetImage(
+                  const AssetImage(
                     Images.chevronForward,
                   ),
+                  size: 16.h,
                 ),
                 iconSize: 11.h,
                 onPressed: () {
@@ -129,7 +133,7 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
           ),
         ),
         SizedBox(
-          height: 24.h,
+          height: 14.h, //+ image icon top padding = 24
         ),
         CarouselSlider(
           items: list,

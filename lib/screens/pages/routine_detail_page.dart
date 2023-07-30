@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/routine_single_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_detail_tabview_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_detail_topinfo_widget.dart';
@@ -27,8 +27,6 @@ class _RoutineDetailPageState extends State<RoutineDetailPage>
 
   late TabController _tabController;
 
-  double tabBarHeight = 58;
-
   @override
   void initState() {
     _tabController = TabController(
@@ -47,12 +45,8 @@ class _RoutineDetailPageState extends State<RoutineDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BackArrowAppBar(
+      appBar: const BackArrowAppBar(
         title: '루틴 상세',
-        leadingImageAsset: Images.arrowBack,
-        onPressedLeadingIcon: () {
-          Navigator.pop(context);
-        },
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(

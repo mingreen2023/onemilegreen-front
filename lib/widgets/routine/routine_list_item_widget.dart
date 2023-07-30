@@ -102,24 +102,26 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
                   ],
                 ),
                 if (widget.originalJoin) ...[
-                  SizedBox(
-                    width: 30.w,
-                    height: 30.w,
-                    child: IconButton(
-                        iconSize: 30.w, //for web build
-                        onPressed: onPressed,
-                        padding: EdgeInsets.only(right: 7.w),
-                        icon: Image.asset(Images.routineJoined)),
+                  IconButton(
+                    iconSize: 30.w, //for web build
+                    onPressed: onPressed,
+                    padding: EdgeInsets.only(right: 7.w),
+                    icon: Image.asset(
+                      Images.routineJoined,
+                      width: 30,
+                      height: 30,
+                    ),
                   ),
                 ] else ...[
-                  SizedBox(
-                    width: 30.w,
-                    height: 30.w,
-                    child: IconButton(
-                        iconSize: 30.w, //for web build
-                        onPressed: onPressed,
-                        padding: EdgeInsets.only(right: 7.w),
-                        icon: Image.asset(Images.routineNotJoined)),
+                  IconButton(
+                    iconSize: 30.w, //for web build
+                    onPressed: onPressed,
+                    padding: EdgeInsets.only(right: 7.w),
+                    icon: Image.asset(
+                      Images.routineNotJoined,
+                      width: 30,
+                      height: 30,
+                    ),
                   ),
                 ]
               ],

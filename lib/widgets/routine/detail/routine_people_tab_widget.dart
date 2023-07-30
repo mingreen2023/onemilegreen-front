@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/widgets/routine/detail/routine_all_user_thumbnail_widget.dart';
 
 class RoutinePeopleTabWidget extends StatelessWidget {
   final RoutineDetailModel data;
@@ -44,7 +45,7 @@ class RoutinePeopleTabWidget extends StatelessWidget {
 
         // If joined == true,
         if (data.isJoined == 1) ...[
-          const RoutineDetailJoinedStatusWidget(),
+          RoutineAllUserThumbnailWidget(),
         ] else ...[
           // 루틴 참여하고 사진 바로 확인하기
           InkWell(
@@ -59,61 +60,6 @@ class RoutinePeopleTabWidget extends StatelessWidget {
             ),
           ),
         ]
-      ],
-    );
-  }
-}
-
-class RoutineDetailJoinedStatusWidget extends StatelessWidget {
-  const RoutineDetailJoinedStatusWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            for (var i = 0; i < 3; i++) ...[
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 15.h,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    print("Image tapped!");
-                  },
-                  child: Image.asset(
-                    Images.routineAuthPlaceholder,
-                    width: 100.w,
-                    height: 100.h,
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 5.w,
-              ),
-            ],
-          ],
-        ),
-        // 참가자 인증 사진 바로 확인하기
-        InkWell(
-          onTap: () {
-            print("Image tapped!");
-          },
-          child: Image.asset(
-            Images.routineCheck,
-            width: 324.w,
-            height: 42.h,
-            fit: BoxFit.contain,
-          ),
-        ),
-        SizedBox(
-          height: 50.h,
-        ),
       ],
     );
   }
