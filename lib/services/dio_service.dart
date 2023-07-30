@@ -31,6 +31,7 @@ class DioServices {
   // community/communityList
   static const String community = "community";
   static const String communityList = "communityList";
+  static const String myCommunityList = "myCommunityList";
 
   static Dio _dio = Dio();
 
@@ -238,6 +239,38 @@ class DioServices {
         "userNo": userNo,
         "category": category,
       };
+      final response = await _dio.post(url, data: data);
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+
+        return CommunityListResponse.fromJson(response.data);
+      } else {
+        return response.data["message"];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        logger.e(e.response?.data);
+        logger.e(e.response?.headers);
+        logger.e(e.response?.requestOptions);
+      } else {
+        logger.e(e.requestOptions);
+        logger.e(e.message);
+      }
+
+      return e.response?.data;
+    }
+  }
+
+//community/myCommunityList
+  static Future<CommunityListResponse> getMyCommunityList(
+      {required int userNo, required category}) async {
+    final url = "$baseUrl/$community/my/communityList";
+    try {
+      Map<String, dynamic> data = {
+        "userNo": userNo,
+        "category": category,
+      };
+
       final response = await _dio.post(url, data: data);
       if (response.data["code"] == 200) {
         logger.d(response.data);

@@ -15,11 +15,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    GreenCityPage(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const GreenCityPage(),
     RoutinePage(),
     CommunityPage(),
-    MyPage(),
+    const MyPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -31,8 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: _widgetOptions[_selectedIndex],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

@@ -149,9 +149,6 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
                 });
               }),
         ),
-        SizedBox(
-          height: 24.h,
-        ),
       ],
     );
   }

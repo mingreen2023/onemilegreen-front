@@ -4,32 +4,40 @@ import 'package:onemilegreen_front/util/colors.dart';
 
 class PrimaryColorRoundButtonWidget extends StatelessWidget {
   final String text;
-  const PrimaryColorRoundButtonWidget(
+  final double w;
+  Color textColor;
+  Color borderColor;
+  Color bgColor;
+
+  PrimaryColorRoundButtonWidget(
     this.text, {
+    this.w = double.maxFinite,
+    this.textColor = Colors.white,
+    this.borderColor = primaryColor,
+    this.bgColor = primaryColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.only(
         bottom: 40.h,
       ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.w),
-      ),
-      width: double.maxFinite,
-      height: 50.h,
       child: TextButton(
         onPressed: () {},
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+          fixedSize: MaterialStateProperty.all<Size>(Size(w, 50.h)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.w),
+                  side: BorderSide(color: borderColor))),
+          backgroundColor: MaterialStateProperty.all<Color>(bgColor),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.white,
+            color: textColor,
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
           ),

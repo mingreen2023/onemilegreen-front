@@ -5,6 +5,7 @@ import 'package:onemilegreen_front/models/routnine_get_userauth_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
+import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 
 class RoutineAllUserDetailWidget extends StatefulWidget {
   final List<RoutineDetails> routnineList;
@@ -27,7 +28,7 @@ class _RoutineAllUserDetailWidgetState
       isLike = !isLike;
 
       // TODO: fix with api call
-      item.urdLike = isLike ? 1 : 0;
+      // item.urdLike = isLike ? 1 : 0;
 
       logger.d("click! $isLike");
     });
@@ -67,12 +68,13 @@ class _RoutineAllUserDetailWidgetState
                           color: Colors.white,
                         ),
                         child: Center(
-                            child: Image.network(
-                          item.urdImage,
-                          fit: BoxFit.cover,
-                          width: 300.w,
-                          height: 510.h,
-                        )),
+                          child: ImageLoaderWidget(
+                            item.urdImage,
+                            fit: BoxFit.cover,
+                            width: 300.w,
+                            height: 510.h,
+                          ),
+                        ),
                       ),
                     ),
                     Center(

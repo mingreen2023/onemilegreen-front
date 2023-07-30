@@ -11,8 +11,8 @@ class Images {
   static const String btGreenCity = "${imagePath}bt_green_city.png";
   static const String btRoutineActive = "${imagePath}bt_routine_active.png";
   static const String btRoutine = "${imagePath}bt_routine.png";
-  static const String btCommunityActive = "${imagePath}bt_gathering_active.png";
-  static const String btCommunity = "${imagePath}bt_gathering.png";
+  static const String btCommunityActive = "${imagePath}bt_community_active.png";
+  static const String btCommunity = "${imagePath}bt_community.png";
   static const String btMypage = "${imagePath}bt_mypage.png";
   static const String btMypageActive = "${imagePath}bt_mypage_active.png";
 
@@ -40,11 +40,11 @@ class Images {
   static const String iconHeartFill = "${imagePath}icon_heart_fill.png";
   static const String iconHeartOutlined = "${imagePath}icon_heart_outline.png";
 
-// gathering
-  static const String gatheringAdd = "${imagePath}gathering_add.png";
-  static const String gatheringShare = "${imagePath}gathering_share.png";
-  static const String gatheringPersonB = "${imagePath}gathering_person_b.png";
-  static const String gatheringPersonW = "${imagePath}gathering_person_w.png";
+// community
+  static const String communityAdd = "${imagePath}community_add.png";
+  static const String communityShare = "${imagePath}community_share.png";
+  static const String communityPersonB = "${imagePath}community_person_b.png";
+  static const String communityPersonW = "${imagePath}community_person_w.png";
 
 // common
   static const String arrowBack = "${imagePath}arrow_back.png";

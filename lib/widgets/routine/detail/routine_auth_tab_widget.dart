@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 
 class RoutineAuthTabWidget extends StatelessWidget {
   const RoutineAuthTabWidget({
@@ -51,10 +52,9 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(color: cardColor),
                   borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                    image: NetworkImage(data.rouNpImg),
-                    fit: BoxFit.cover,
-                  ),
+                ),
+                child: ImageLoaderWidget(
+                  data.rouNpImg,
                 ),
               ),
               Positioned(
@@ -77,10 +77,9 @@ class RoutineAuthTabWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(color: cardColor),
                   borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                    image: NetworkImage(data.rouPassImg),
-                    fit: BoxFit.cover,
-                  ),
+                ),
+                child: ImageLoaderWidget(
+                  data.rouPassImg,
                 ),
               ),
               Positioned(
@@ -114,9 +113,6 @@ class RoutineAuthTabWidget extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 70.h,
         ),
       ],
     );

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/widgets/common/primary_color_btn_widget.dart';
+import 'package:onemilegreen_front/widgets/common/tab_bar_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_auth_tab_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_people_tab_widget.dart';
 
@@ -28,38 +29,10 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
                 bottom: BorderSide(color: cardColor, width: 1.w),
               ),
             ),
-            child: TabBar(
-              tabs: [
-                Container(
-                  height: tabBarHeight,
-                  padding: EdgeInsets.only(bottom: 10.h),
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    '인증사진 가이드',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: tabBarHeight,
-                  padding: EdgeInsets.only(bottom: 10.h),
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    '참가자 인증현황',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-              indicatorWeight: 1.5,
-              indicatorColor: primaryColor,
-              labelColor: Colors.black,
-              unselectedLabelColor: const Color(0xFFA1A1A1),
-              controller: _tabController,
+            child: TabBarWidget(
+              "인증 가이드",
+              "참가자 인증 현황",
+              tabController: _tabController,
             ),
           ),
           // TabBarView >>>
@@ -72,7 +45,26 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
               ],
             ),
           ),
-          const PrimaryColorRoundButtonWidget("참가하기"),
+          if (data.isJoined == 1) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                PrimaryColorRoundButtonWidget(
+                  "끝내기",
+                  textColor: categoryGreyColor,
+                  borderColor: categoryGreyColor,
+                  bgColor: Colors.white,
+                  w: 77.w,
+                ),
+                PrimaryColorRoundButtonWidget(
+                  "인증하기",
+                  w: 240.w,
+                ),
+              ],
+            )
+          ] else ...[
+            PrimaryColorRoundButtonWidget("참가하기"),
+          ]
         ],
       ),
     );

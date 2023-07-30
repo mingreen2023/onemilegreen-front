@@ -59,7 +59,7 @@ TextTheme textTheme() {
       fontWeight: FontWeight.w600,
     ),
     bodyMedium: TextStyle(
-      color: primaryColor,
+      color: Colors.black,
       fontSize: 16.sp,
       fontWeight: FontWeight.w600,
     ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
+import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/util/constants.dart';
@@ -102,7 +103,9 @@ class _GreenCityPageState extends State<GreenCityPage> {
                   );
                 }
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
                 );
               }),
         ),

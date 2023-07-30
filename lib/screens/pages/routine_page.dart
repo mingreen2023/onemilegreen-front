@@ -12,13 +12,7 @@ import 'package:onemilegreen_front/widgets/routine/routine_top_status_widget.dar
 import 'package:shimmer/shimmer.dart';
 
 class RoutinePage extends StatefulWidget {
-  const RoutinePage({super.key});
-
-  @override
-  State<RoutinePage> createState() => _RoutinePageState();
-}
-
-class _RoutinePageState extends State<RoutinePage> {
+  RoutinePage({super.key});
   // TODO : refactoring
   Future<RoutineStatusModel> futureRoutineStatus =
       DioServices.getUserRoutineStatus(userNo: "1");
@@ -26,6 +20,11 @@ class _RoutinePageState extends State<RoutinePage> {
   Future<RoutineListModel> futureRoutineList =
       DioServices.getRoutineList(userNo: "1");
 
+  @override
+  State<RoutinePage> createState() => _RoutinePageState();
+}
+
+class _RoutinePageState extends State<RoutinePage> {
   // TODO: manage user info
   String userName = "서하";
 
@@ -45,8 +44,8 @@ class _RoutinePageState extends State<RoutinePage> {
                 ),
                 FutureBuilder(
                   future: Future.wait([
-                    futureRoutineStatus,
-                    futureRoutineList,
+                    widget.futureRoutineStatus,
+                    widget.futureRoutineList,
                   ]),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {

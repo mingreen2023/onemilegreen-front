@@ -4,20 +4,17 @@ import 'package:onemilegreen_front/models/routnine_get_userauth_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_all_user_detail_widget.dart';
 
 class RoutineAllUserThumbnailWidget extends StatelessWidget {
   Future<GetUserAuth> futureAlluserRoutine =
       DioServices.getAllUserRoutine(rouId: 3);
 
-  BoxDecoration buildContainerDecoration(String imageUrl) {
+  BoxDecoration buildContainerDecoration() {
     return BoxDecoration(
       border: Border.all(color: cardColor),
       borderRadius: BorderRadius.circular(5),
-      image: DecorationImage(
-        image: NetworkImage(imageUrl),
-        fit: BoxFit.cover,
-      ),
     );
   }
 
@@ -41,8 +38,10 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
                     width: 100.w,
                     height: 100.w,
                     margin: EdgeInsets.only(right: 5.w),
-                    decoration:
-                        buildContainerDecoration(routineDetail.urdImage),
+                    decoration: buildContainerDecoration(),
+                    child: ImageLoaderWidget(
+                      routineDetail.urdImage,
+                    ),
                   );
                 }).toList(),
               ),
@@ -52,7 +51,6 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  print("Image tapped!");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
