@@ -18,5 +18,6 @@ class OmgColors {
   static const lineGreyColor = Color(0xffDCDCDC);
   static const arrowGreyColor = Color(0xff949494);
   static const countGreyColor = Color(0xff878787);
+  static const chipGreyColor = Color(0xffB5B5B5);
   static const unselectedBottonMenu = Color(0xff929292);
 }

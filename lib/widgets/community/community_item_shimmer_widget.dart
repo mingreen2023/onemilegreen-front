@@ -18,9 +18,12 @@ class CommunityItemShimmerWidget extends StatelessWidget {
             height: 26.h,
           ),
           // slider >>>
-          SizedBox(
+          Container(
             width: double.maxFinite,
             height: 271.h,
+            decoration: const BoxDecoration(
+              color: OmgColors.primaryColor,
+            ),
           ),
           // 이 모임에서 총 ㅇㅇ톤의 탄소를 줄였어요.
           Container(

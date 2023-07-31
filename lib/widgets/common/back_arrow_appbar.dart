@@ -4,10 +4,14 @@ import 'package:onemilegreen_front/util/images.dart';
 
 class BackArrowAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final String icon;
+  final Function()? onPressed;
 
   const BackArrowAppBar({
     super.key,
     required this.title,
+    this.icon = Images.arrowBack,
+    this.onPressed,
   });
 
   @override
@@ -24,14 +28,16 @@ class BackArrowAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       leading: IconButton(
-        padding: EdgeInsets.only(left: 14.w), // replace with your scaled size
-        icon: SizedBox(
-          width: 16.w,
-          height: 16.w,
-          child: Image.asset(Images.arrowBack),
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
+          padding: EdgeInsets.only(left: 14.w), // replace with your scaled size
+          icon: SizedBox(
+            width: 16.w,
+            height: 16.w,
+            child: Image.asset(
+              icon,
+              color: Colors.black,
+            ),
+          ),
+          onPressed: onPressed ?? () => Navigator.pop(context)),
     );
   }
 

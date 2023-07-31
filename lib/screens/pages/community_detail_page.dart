@@ -193,7 +193,7 @@ class BottomButtonSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: margin_side, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: margin_side, vertical: 10.h),
       height: 94.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,7 +222,12 @@ class BottomButtonSheetWidget extends StatelessWidget {
               ),
             ),
             onPressed: () {},
-            child: const Text("일정 보기"),
+            child: const Text(
+              "일정 보기",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),

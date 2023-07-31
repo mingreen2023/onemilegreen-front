@@ -80,6 +80,7 @@ class CommunityItem {
 }
 
 class PhotoItem {
+  final int feedId;
   final String userNick;
   final String schName;
   final String schStDate;
@@ -89,6 +90,7 @@ class PhotoItem {
   final int feedLike;
 
   PhotoItem({
+    required this.feedId,
     required this.userNick,
     required this.schName,
     required this.schStDate,
@@ -100,6 +102,7 @@ class PhotoItem {
 
   factory PhotoItem.fromJson(Map<String, dynamic> json) {
     return PhotoItem(
+      feedId: json['feed_id'],
       userNick: json['user_nick'],
       schName: json['sch_name'],
       schStDate: json['sch_st_date'],

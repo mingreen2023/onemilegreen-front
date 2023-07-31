@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:onemilegreen_front/screens/pages/community_create_page.dart';
 import 'package:onemilegreen_front/screens/pages/community_page.dart';
 import 'package:onemilegreen_front/screens/pages/green_city_page.dart';
 import 'package:onemilegreen_front/screens/pages/my_page.dart';
 import 'package:onemilegreen_front/screens/pages/routine_page.dart';
+import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/util/images.dart';
 
@@ -71,6 +73,26 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: _onItemTapped,
         ),
       ),
+      floatingActionButton: _selectedIndex == 2
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CommunityCreatePage(),
+                      fullscreenDialog: true),
+                );
+              },
+              label: const Text(
+                '모임 만들기',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              icon: const Icon(Icons.add),
+              backgroundColor: OmgColors.primaryColor,
+            )
+          : null,
     );
   }
 

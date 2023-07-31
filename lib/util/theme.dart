@@ -125,4 +125,46 @@ class CustomTextStyle {
     color: OmgColors.lightGreyColor,
     fontWeight: FontWeight.w400,
   );
+
+  static TextStyle createComTitle = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  static TextStyle createComGuide = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w500,
+    color: OmgColors.unselectedBottonMenu,
+  );
+
+  static TextStyle createComName = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
+
+  static TextStyle createComInputPlaceholder = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w400,
+    color: OmgColors.chipGreyColor,
+  );
+
+  static TextStyle createComInputText = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+
+  static TextStyle createComChipSelected = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: OmgColors.primaryColor,
+  );
+
+  static TextStyle createComChipUnselected = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: OmgColors.chipGreyColor,
+  );
 }
