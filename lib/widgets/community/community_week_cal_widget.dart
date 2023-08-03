@@ -25,10 +25,14 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
   late Day selDay;
-  late List<Widget> list;
 
-  List<CommunityScheduleListItemWidget> findScheduleForSelectedDay(Day selDay) {
-    List<CommunityScheduleListItemWidget> list = [];
+  // Animated list
+  final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+  late List<ScheduleListItem> _items;
+  int counter = 0;
+
+  List<ScheduleListItem> findScheduleForSelectedDay(Day selDay) {
+    List<ScheduleListItem> list = [];
     for (ScheduleListItem schedule in widget.scheduleList) {
       DateTime scheduleStart = DateTime.parse(schedule.schStDate);
       DateTime scheduleEnd = DateTime.parse(schedule.schEndDate);
@@ -36,7 +40,7 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
 
       if (selectedDate.isAfter(scheduleStart) &&
           selectedDate.isBefore(scheduleEnd)) {
-        list.add(CommunityScheduleListItemWidget(schedule));
+        list.add(schedule);
       }
     }
 
@@ -78,12 +82,42 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
                     onTap: () {
                       setState(() {
                         selDay = day;
+                        updateItems(selDay);
                       });
                     }),
               ],
             ]),
       ]
     ];
+  }
+
+  Widget _buildItem(BuildContext context, int index, animation) {
+    ScheduleListItem schedule = _items[index];
+    return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: const Offset(0, 0),
+        ).animate(animation),
+        child: CommunityScheduleListItemWidget(schedule));
+  }
+
+  void updateItems(Day selDay) {
+    final newItems = findScheduleForSelectedDay(selDay);
+
+    // remove old items
+    for (var i = _items.length - 1; i >= 0; i--) {
+      _items.removeAt(i);
+      listKey.currentState?.removeItem(
+          i,
+          (_, animation) =>
+              Container()); // replace with your own removal animation if you want
+    }
+
+    // add new items
+    for (var i = 0; i < newItems.length; i++) {
+      _items.insert(i, newItems[i]);
+      listKey.currentState?.insertItem(i);
+    }
   }
 
   @override
@@ -97,6 +131,8 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
           element.date.day == widget.weekCalendar.startDate.day,
       orElse: () => widget.weekCalendar.weeks[_current].days.first,
     );
+
+    _items = findScheduleForSelectedDay(selDay);
   }
 
   @override
@@ -104,6 +140,7 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
     Week currentWeek = widget.weekCalendar.weeks[_current];
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 20.h,
@@ -119,6 +156,7 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
             top: 17.h,
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               // < M월 n 주차 >
               Row(
@@ -190,7 +228,15 @@ class _CommunityCalWidgetState extends State<CommunityCalWidget> {
                 height: 24.h,
               ),
               // 해당 날짜 리스트 >>>
-              ...findScheduleForSelectedDay(selDay),
+              AnimatedList(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                key: listKey,
+                initialItemCount: _items.length,
+                itemBuilder: (context, index, animation) {
+                  return _buildItem(context, index, animation);
+                },
+              ),
             ],
           ),
         ),

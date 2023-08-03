@@ -54,6 +54,7 @@ class _CommunitySchedulePageState extends State<CommunitySchedulePage>
                       List<ScheduleListItem> schedule =
                           snapshot.data!.scheduleLists;
                       return Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CommunityCalWidget(schedule),

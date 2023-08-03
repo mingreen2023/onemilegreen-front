@@ -9,10 +9,12 @@ import 'package:onemilegreen_front/util/theme.dart';
 class RoutineListItemWidget extends StatefulWidget {
   final RoutineModel routine;
   bool originalJoin;
+  Function(RoutineModel routine, bool isJoined) onPressed;
 
   RoutineListItemWidget({
     super.key,
     required this.routine,
+    required this.onPressed,
   }) : originalJoin = routine.isJoined == 1 ? true : false;
 
   @override
@@ -20,27 +22,6 @@ class RoutineListItemWidget extends StatefulWidget {
 }
 
 class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
-  // TODO : refactoring
-  // Future<RoutineJoinResultModel> futureRoutineJoin =
-  //     DioServices.insertRoutine(userNo: "1", rouId: 3);
-
-  void onPressed() {
-    setState(() {
-      // if (widget.originalJoin) {
-      //   futureRoutineJoin.then(
-      //     (value) {
-      //       print(value.message);
-      //       widget.originalJoin = !widget.originalJoin;
-      //     },
-      //   );
-      // } else {
-      //   widget.originalJoin = !widget.originalJoin;
-      // }
-
-      widget.originalJoin = !widget.originalJoin;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -104,7 +85,8 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
                 if (widget.originalJoin) ...[
                   IconButton(
                     iconSize: 30.w,
-                    onPressed: onPressed,
+                    onPressed: () =>
+                        widget.onPressed(widget.routine, widget.originalJoin),
                     padding: EdgeInsets.only(right: 7.w),
                     icon: Center(
                       child: Image.asset(
@@ -117,7 +99,8 @@ class _RoutineListItemWidgetState extends State<RoutineListItemWidget> {
                 ] else ...[
                   IconButton(
                     iconSize: 30.w,
-                    onPressed: onPressed,
+                    onPressed: () =>
+                        widget.onPressed(widget.routine, widget.originalJoin),
                     padding: EdgeInsets.only(right: 7.w),
                     icon: Center(
                       child: Image.asset(
