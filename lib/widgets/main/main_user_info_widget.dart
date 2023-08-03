@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/constants.dart';
+import 'package:onemilegreen_front/widgets/common/webview_widget.dart';
 
 class UserInfoWidget extends StatelessWidget {
   final String nickName, userMileage;
@@ -56,7 +57,14 @@ class UserInfoWidget extends StatelessWidget {
                 child: IconButton(
                   icon: Image.asset(Images.mainTopMap),
                   alignment: Alignment.topCenter,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OmgWebViewWidget(mapUrl),
+                          fullscreenDialog: true),
+                    );
+                  },
                 ),
               ),
             ],

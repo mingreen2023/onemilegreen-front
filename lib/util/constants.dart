@@ -11,3 +11,7 @@ const double bottomIconSize = 24;
 double margin_top = 54.h;
 double margin_side = 20.w;
 double tabBarHeight = 58;
+
+// map
+const String mapUrl =
+    "https://map.seoul.go.kr/smgis2/tmc/XkJBU0VNQVBfR0VOXlQ6MTFeRl5GXkZeXl5eXl4xMjYuOTk2NTcwXjM3LjU1Nzg1NV43XjExMTAzMzk1XzUvMy8yLzQvMV5jaXR5TGlmZV5eXnRoZW1lXmxpc3ReLg==";
