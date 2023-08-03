@@ -1,12 +1,16 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:mime_type/mime_type.dart';
+import 'package:http_parser/http_parser.dart';
 
 class Util {
   static final domain = dotenv.get("S3_DOMAIN");
@@ -17,6 +21,40 @@ class Util {
       highlightColor: Colors.white,
       child: widget,
     );
+  }
+
+  static Future<MultipartFile?> getFile() async {
+    ImagePicker picker = ImagePicker();
+    XFile? selectImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 510,
+      maxWidth: 510,
+      imageQuality: 50,
+    );
+
+    if (selectImage != null) {
+      String sendData = selectImage.path;
+      String mimeType = mime(selectImage.name) ?? '';
+      String mimee = mimeType.split('/')[0];
+      String type = mimeType.split('/')[1];
+
+      logger.d("sendData: $sendData");
+      logger.d("selectImage.name: ${selectImage.name}.");
+      logger.d("mimeType: $mimeType.");
+
+      MultipartFile file = await MultipartFile.fromFile(
+        sendData,
+        filename: selectImage.name,
+        contentType: MediaType(
+          mimee,
+          type,
+        ),
+      );
+
+      return file;
+    } else {
+      return null;
+    }
   }
 }
 

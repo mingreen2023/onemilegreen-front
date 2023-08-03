@@ -8,6 +8,7 @@ class BottomRoundButtonWidget extends StatelessWidget {
   Color textColor;
   Color borderColor;
   Color bgColor;
+  final Function()? onPressed;
 
   BottomRoundButtonWidget(
     this.text, {
@@ -15,6 +16,7 @@ class BottomRoundButtonWidget extends StatelessWidget {
     this.textColor = Colors.white,
     this.borderColor = OmgColors.primaryColor,
     this.bgColor = OmgColors.primaryColor,
+    this.onPressed,
     super.key,
   });
 
@@ -25,7 +27,7 @@ class BottomRoundButtonWidget extends StatelessWidget {
         bottom: 40.h,
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onPressed ?? () {},
         style: ButtonStyle(
           fixedSize: MaterialStateProperty.all<Size>(Size(w, 50.h)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

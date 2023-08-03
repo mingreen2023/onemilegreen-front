@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:onemilegreen_front/models/community_detail_model.dart';
 import 'package:onemilegreen_front/models/community_model.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
+import 'package:onemilegreen_front/models/routine_auth_result_model.dart';
 import 'package:onemilegreen_front/models/routine_join_result.dart';
 import 'package:onemilegreen_front/models/routine_list_model.dart';
 import 'package:onemilegreen_front/models/routine_single_model.dart';
@@ -16,7 +17,8 @@ class DioServices {
   static final DioServices _dioServices = DioServices._internal();
   factory DioServices() => _dioServices;
   Map<String, dynamic> dioInformation = {};
-  static final baseUrl = dotenv.get("MOCK_SERVER_ADDRESS");
+  static final mockServer = dotenv.get("MOCK_SERVER_ADDRESS");
+  static final server = dotenv.get("SERVER_ADDRESS");
 
   static const String greenSeoul = "greenseoul";
   static const String status = "status";
@@ -28,6 +30,7 @@ class DioServices {
   static const String routineItem = "routineItem";
   static const String joinRoutine = "joinRoutine";
   static const String findAllUserRoutine = "findAllUserRoutine";
+  static const String routineUploadFile = "routineUploadFile";
 
   //community
   static const String community = "community";
@@ -38,15 +41,16 @@ class DioServices {
   static Dio _dio = Dio();
 
   DioServices._internal() {
-    BaseOptions options = BaseOptions(
-      baseUrl: baseUrl,
-      connectTimeout: const Duration(milliseconds: 10000),
-      receiveTimeout: const Duration(milliseconds: 10000),
-      sendTimeout: const Duration(milliseconds: 10000),
-      //headers: {},
-    );
-    _dio = Dio(options);
-    _dio.interceptors.add(DioInterceptor());
+    // BaseOptions options = BaseOptions(
+    //   baseUrl: mockServer,
+    //   connectTimeout: const Duration(milliseconds: 10000),
+    //   receiveTimeout: const Duration(milliseconds: 10000),
+    //   sendTimeout: const Duration(milliseconds: 10000),
+    //   //headers: {},
+    // );
+    //_dio = Dio(options);
+    _dio = Dio();
+    //_dio.interceptors.add(DioInterceptor());
   }
 
   Dio to() {
@@ -57,9 +61,10 @@ class DioServices {
     required String url,
     required Map<String, dynamic> data,
     required T Function(Map<String, dynamic>) fromJson,
+    Options? options,
   }) async {
+    final response = await _dio.post(url, data: data, options: options);
     try {
-      final response = await _dio.post(url, data: data);
       if (response.data["code"] == 200) {
         logger.d(response.data);
         return fromJson(response.data);
@@ -75,7 +80,9 @@ class DioServices {
         logger.e(e.requestOptions);
         logger.e(e.message);
       }
-      rethrow;
+      return response.data;
+    } catch (e) {
+      return response.data;
     }
   }
 
@@ -83,7 +90,7 @@ class DioServices {
   static Future<GreenSeoulStatusModel> getGreenSeoulStatus(
           {required String userNo}) =>
       _performPost(
-        url: "$baseUrl/$greenSeoul/$status",
+        url: "$mockServer/$greenSeoul/$status",
         data: {
           "userNo": userNo,
         },
@@ -94,7 +101,7 @@ class DioServices {
   static Future<RoutineStatusModel> getUserRoutineStatus(
           {required String userNo}) =>
       _performPost(
-        url: "$baseUrl/$routine/$userRoutine/$status",
+        url: "$mockServer/$routine/$userRoutine/$status",
         data: {
           "userNo": userNo,
         },
@@ -104,7 +111,7 @@ class DioServices {
 //routine/routineList
   static Future<RoutineListModel> getRoutineList({required String userNo}) =>
       _performPost(
-        url: "$baseUrl/$routine/$routineList",
+        url: "$mockServer/$routine/$routineList",
         data: {
           "userNo": userNo,
         },
@@ -117,7 +124,7 @@ class DioServices {
     required int rouId,
   }) =>
       _performPost(
-        url: "$baseUrl/$routine/$routineItem",
+        url: "$mockServer/$routine/$routineItem",
         data: {
           "user_no": userNo,
           "rou_id": rouId,
@@ -131,7 +138,7 @@ class DioServices {
     required int rouId,
   }) =>
       _performPost(
-        url: "$baseUrl/$routine/$joinRoutine",
+        url: "$mockServer/$routine/$joinRoutine",
         data: {
           "user_no": userNo,
           "routine_id": rouId,
@@ -142,12 +149,32 @@ class DioServices {
 //routine/findAllUserRoutine
   static Future<GetUserAuth> getAllUserRoutine({required int rouId}) async =>
       _performPost(
-        url: "$baseUrl/$routine/$findAllUserRoutine",
+        url: "$server/$routine/$findAllUserRoutine",
         data: {
-          "routine_id": rouId,
+          "rou_id": rouId,
         },
         fromJson: (data) => GetUserAuth.fromJson(data),
       );
+
+//routine/routineUploadFile
+  static Future<RoutineAuthResult> insertRoutineFile(FormData formData) async {
+    try {
+      final response = await _dio.post(
+        "$server/$routine/$routineUploadFile",
+        data: formData,
+      );
+
+      if (response.data["code"] == 200) {
+        logger.d(response.data);
+        return RoutineAuthResult.fromJson(response.data);
+      } else {
+        throw Exception(response.data["message"]);
+      }
+    } catch (e) {
+      logger.e(e);
+      throw Exception(e);
+    }
+  }
 
 //community/communityList
   static Future<CommunityListResponse> getCommunityList({
@@ -155,7 +182,7 @@ class DioServices {
     required category,
   }) async =>
       _performPost(
-        url: "$baseUrl/$community/$communityList",
+        url: "$mockServer/$community/$communityList",
         data: {
           "userNo": userNo,
           "category": category,
@@ -169,7 +196,7 @@ class DioServices {
     required category,
   }) async =>
       _performPost(
-        url: "$baseUrl/$community/my/communityList",
+        url: "$mockServer/$community/my/communityList",
         data: {
           "userNo": userNo,
           "category": category,
@@ -183,7 +210,7 @@ class DioServices {
     required int com_id,
   }) async =>
       _performPost(
-        url: "$baseUrl/$community/$communityItem",
+        url: "$mockServer/$community/$communityItem",
         data: {
           "userNo": userNo,
           "com_id": com_id,

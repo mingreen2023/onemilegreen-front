@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onemilegreen_front/models/routine_auth_result_model.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
+import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/bottom_round_btn_widget.dart';
 import 'package:onemilegreen_front/widgets/common/tab_bar_widget.dart';
 import 'package:onemilegreen_front/widgets/routine/detail/routine_auth_tab_widget.dart';
@@ -17,6 +21,38 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
   RoutineDetailModel data;
   final double tabBarHeight;
   final TabController _tabController;
+
+  void onPressAuth() async {
+    MultipartFile? multiFile = await Util.getFile();
+    logger.d("multiFile: ${multiFile?.filename}");
+
+    if (multiFile != null) {
+      // Map<String, dynamic> formData = {
+      //   'file': multiFile,
+      //   'user_rou_id': 88,
+      //   'urd_content': 'TEST',
+      // };
+
+      FormData formData = FormData.fromMap({
+        "file": multiFile,
+        "user_rou_id": 88,
+        'urd_content': 'TEST',
+      });
+
+      logger.d("formData: $formData");
+
+      try {
+        Future<RoutineAuthResult> result =
+            DioServices.insertRoutineFile(formData);
+
+        result.then((value) => logger.d("result = $value"));
+      } on Exception {
+        logger.d("이미지 다시 선택");
+      }
+    } else {
+      logger.d("이미지 다시 선택");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +92,11 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
                   bgColor: Colors.white,
                   w: 77.w,
                 ),
+                // 인증하기 >>>
                 BottomRoundButtonWidget(
                   "인증하기",
                   w: 240.w,
+                  onPressed: onPressAuth,
                 ),
               ],
             )
