@@ -5,7 +5,7 @@ import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/widgets/community/community_item_widget.dart';
 
 class CommunityListWidget extends StatelessWidget {
-  final List<CommunityList> list;
+  final List<CommunityListItem> list;
   const CommunityListWidget(this.list, {super.key});
 
   @override

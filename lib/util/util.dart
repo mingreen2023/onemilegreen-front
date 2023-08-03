@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:onemilegreen_front/models/community_schedule_model.dart';
+import 'package:onemilegreen_front/models/week_calendar_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
@@ -152,6 +154,135 @@ class Formatter {
     formattedDate = formatter.format(parsedDate);
 
     return formattedDate;
+  }
+
+  // from 2023-07-28 11:00
+  // to 07.28 11:00
+  static String formatDateTime(String date) {
+    String formattedDate = "";
+
+    DateTime parsedDate = DateTime.parse(date);
+    final formatter = DateFormat('MM.dd hh:mm');
+    formattedDate = formatter.format(parsedDate);
+
+    return formattedDate;
+  }
+
+  // from 2023-07-28 11:00
+  // to 7월 n주차
+  static String formatMonthWeekCount(String date) {
+    DateTime parsedDate = DateTime.parse(date);
+
+    int weekDayCount = parsedDate.day + (parsedDate.weekday - 1);
+    int weekOfMonth = ((weekDayCount - 1) / 7).ceil();
+
+    return '${parsedDate.month}월 $weekOfMonth주차';
+  }
+
+  // from 2023-07-28 11:00
+  // to 4
+  static int weekOfMonth(DateTime date) {
+    DateTime firstDayThisMonth = DateTime(date.year, date.month, 1);
+    int dayOfYearFirstDayThisMonth = firstDayThisMonth.day;
+    int dayOfYearDate = date.day;
+    return ((dayOfYearDate - dayOfYearFirstDayThisMonth) / 7).ceil() + 1;
+  }
+
+  static List<int> calculateWeeksBetweenMonth(firstDate, lastDate) {
+    DateTime firstDateTime = DateTime.parse(firstDate);
+    DateTime lastDateTime = DateTime.parse(lastDate);
+
+    List<int> weekNumbers = [];
+
+    // 첫번째 주
+    int firstWeekOfMonth = weekOfMonth(firstDateTime);
+
+    // 마지막 주
+    int lastWeekOfMonth = weekOfMonth(lastDateTime);
+
+    for (int i = firstWeekOfMonth; i <= lastWeekOfMonth; i++) {
+      weekNumbers.add(i);
+    }
+
+    logger.d('Week numbers: $weekNumbers');
+
+    return weekNumbers;
+  }
+
+  // 주별 달력 초기화
+  static WeekCalendar createWeekCalendar(List<ScheduleListItem> scheduleList) {
+    String firstDate = scheduleList[0].schStDate;
+    String lastDate = scheduleList.last.schEndDate;
+    DateTime first = DateTime.parse(firstDate);
+    DateTime last = DateTime.parse(lastDate);
+
+    DateTime start = first;
+    DateTime end = last;
+
+    first = first.subtract(Duration(days: first.weekday - 1));
+    last = last.add(Duration(days: 7 - last.weekday));
+
+    Map<DateTime, bool> scheduleDates = {};
+    for (var schedule in scheduleList) {
+      var startDate = DateTime.parse(schedule.schStDate);
+      var endDate = DateTime.parse(schedule.schEndDate);
+
+      for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+        scheduleDates[startDate.add(Duration(days: i))] = true;
+      }
+    }
+
+    List<Week> weeks = [];
+    int weekNumber = 1;
+    String currentMonth = DateFormat('MM').format(first);
+
+    for (int i = 0; i <= last.difference(first).inDays; i++) {
+      DateTime currentDay = first.add(Duration(days: i));
+
+      if (currentDay.weekday == DateTime.monday) {
+        DateTime medianDay = currentDay.add(const Duration(days: 3));
+        String month = DateFormat('MM').format(medianDay);
+
+        if (month != currentMonth) {
+          weekNumber = 1;
+          currentMonth = month;
+        }
+
+        List<Day> days = [];
+        for (int j = 0; j < 7; j++) {
+          DateTime thisDay = currentDay.add(Duration(days: j));
+          String imageAsset;
+          if (DateTime.now().day == thisDay.day &&
+              DateTime.now().month == thisDay.month &&
+              DateTime.now().year == thisDay.year) {
+            imageAsset = Images.calToday;
+          } else {
+            imageAsset = scheduleDates[thisDay] ?? false
+                ? Images.calTodo
+                : Images.calNotTodo;
+          }
+          days.add(Day(date: thisDay, imageAsset: imageAsset));
+        }
+
+        weeks.add(Week(
+          weekNumber: weekNumber,
+          month: month,
+          days: days,
+        ));
+      }
+
+      if (currentDay.weekday == DateTime.sunday) {
+        weekNumber++;
+      }
+    }
+
+    return WeekCalendar(
+      startDate: start,
+      endDate: end,
+      firstDate: first,
+      lastDate: last,
+      weeks: weeks,
+    );
   }
 
   static int calculateWeeks(String startDate, String endDate) {

@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:onemilegreen_front/models/community_detail_model.dart';
 import 'package:onemilegreen_front/models/community_model.dart';
+import 'package:onemilegreen_front/models/community_schedule_model.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/models/routine_auth_result_model.dart';
 import 'package:onemilegreen_front/models/routine_join_result.dart';
@@ -37,20 +38,20 @@ class DioServices {
   static const String communityList = "communityList";
   static const String myCommunityList = "myCommunityList";
   static const String communityItem = "communityItem";
+  static const String getAllSchedule = "getAllSchedule";
 
   static Dio _dio = Dio();
 
   DioServices._internal() {
-    // BaseOptions options = BaseOptions(
-    //   baseUrl: mockServer,
-    //   connectTimeout: const Duration(milliseconds: 10000),
-    //   receiveTimeout: const Duration(milliseconds: 10000),
-    //   sendTimeout: const Duration(milliseconds: 10000),
-    //   //headers: {},
-    // );
-    //_dio = Dio(options);
-    _dio = Dio();
-    //_dio.interceptors.add(DioInterceptor());
+    BaseOptions options = BaseOptions(
+      baseUrl: mockServer,
+      connectTimeout: const Duration(milliseconds: 10000),
+      receiveTimeout: const Duration(milliseconds: 10000),
+      sendTimeout: const Duration(milliseconds: 10000),
+      //headers: {},
+    );
+    _dio = Dio(options);
+    _dio.interceptors.add(DioInterceptor());
   }
 
   Dio to() {
@@ -63,26 +64,30 @@ class DioServices {
     required T Function(Map<String, dynamic>) fromJson,
     Options? options,
   }) async {
-    final response = await _dio.post(url, data: data, options: options);
     try {
+      final response = await _dio.post(url, data: data, options: options);
       if (response.data["code"] == 200) {
         logger.d(response.data);
         return fromJson(response.data);
       } else {
         throw Exception(response.data["message"]);
       }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        logger.e(e.response?.data);
-        logger.e(e.response?.headers);
-        logger.e(e.response?.requestOptions);
-      } else {
-        logger.e(e.requestOptions);
-        logger.e(e.message);
-      }
-      return response.data;
     } catch (e) {
-      return response.data;
+      if (e is DioException) {
+        logger.e(url);
+
+        if (e.response != null) {
+          logger.e(e.response?.data);
+          logger.e(e.response?.headers);
+          logger.e(e.response?.requestOptions);
+        } else {
+          logger.e(e.requestOptions);
+          logger.e(e.message);
+        }
+      }
+      logger.e(url);
+      throw Exception(e);
+      //TODO: return empty list or custom error
     }
   }
 
@@ -149,7 +154,7 @@ class DioServices {
 //routine/findAllUserRoutine
   static Future<GetUserAuth> getAllUserRoutine({required int rouId}) async =>
       _performPost(
-        url: "$server/$routine/$findAllUserRoutine",
+        url: "$mockServer/$routine/$findAllUserRoutine",
         data: {
           "rou_id": rouId,
         },
@@ -217,6 +222,18 @@ class DioServices {
         },
         fromJson: (data) => CommunityItemResponse.fromJson(data),
       );
+
+//community/getAllSchedule
+  static Future<ScheduleData> getCommunityAllSchedule({
+    required int comId,
+  }) async =>
+      _performPost(
+        url: "$mockServer/$community/$getAllSchedule",
+        data: {
+          "com_id": comId,
+        },
+        fromJson: (data) => ScheduleData.fromJson(data),
+      );
 }
 
 class DioInterceptor extends Interceptor {
@@ -247,7 +264,7 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     logger.e("Error ${err.error}");
     logger.e("Error Message ${err.message}");
     super.onError(err, handler);

@@ -8,6 +8,7 @@ class OmgColors {
   static const checkAfter = primaryColor;
   static const cardColor = Color(0xffEDF1EB);
   static const scheduleLabelColor = Color(0xff2F2F2F);
+  static const selectedDateColor = Color(0xff70AF8C);
   static const categoryGreyColor = Color(0xff9F9F9F);
   static const secondCategoryColor = Color(0xff767676);
   static const titleGreyColor = Color(0xff6F6F6F);

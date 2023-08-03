@@ -28,11 +28,11 @@ class Data {
     required this.communityList,
   });
 
-  List<CommunityList> communityList;
+  List<CommunityListItem> communityList;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        communityList: List<CommunityList>.from(
-            json["communityList"].map((x) => CommunityList.fromJson(x))),
+        communityList: List<CommunityListItem>.from(
+            json["communityList"].map((x) => CommunityListItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,8 +41,8 @@ class Data {
       };
 }
 
-class CommunityList {
-  CommunityList({
+class CommunityListItem {
+  CommunityListItem({
     required this.comId,
     required this.comName,
     required this.comContent,
@@ -64,7 +64,8 @@ class CommunityList {
   int comBadge;
   int comLeaderId;
 
-  factory CommunityList.fromJson(Map<String, dynamic> json) => CommunityList(
+  factory CommunityListItem.fromJson(Map<String, dynamic> json) =>
+      CommunityListItem(
         comId: json["com_id"],
         comName: json["com_name"],
         comContent: json["com_content"],

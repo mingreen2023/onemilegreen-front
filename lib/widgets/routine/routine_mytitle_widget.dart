@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/screens/pages/routine_detail_page.dart';
+import 'package:onemilegreen_front/screens/pages/routine/routine_detail_page.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/theme.dart';

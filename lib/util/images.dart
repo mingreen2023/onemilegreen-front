@@ -45,6 +45,7 @@ class Images {
   static const String communityShare = "${imagePath}community_share.png";
   static const String communityPersonB = "${imagePath}community_person_b.png";
   static const String communityPersonW = "${imagePath}community_person_w.png";
+  static const String calSelected = "${imagePath}cal_selected.png";
 
 // common
   static const String arrowBack = "${imagePath}arrow_back.png";

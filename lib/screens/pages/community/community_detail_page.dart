@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/community_detail_model.dart';
+import 'package:onemilegreen_front/screens/pages/community/community_schedule_page.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
+import 'package:onemilegreen_front/widgets/common/bottom_button_sheet_widget.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 import 'package:onemilegreen_front/widgets/common/round_chip_widget.dart';
 import 'package:onemilegreen_front/widgets/community/community_item_shimmer_widget.dart';
@@ -24,6 +26,17 @@ class CommunityDetailPage extends StatefulWidget {
 
 class _CommunityDetailPageState extends State<CommunityDetailPage> {
   late CommunityItem item;
+
+  void onPressShowSchedule(CommunityItem item) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CommunitySchedulePage(
+                comItem: item,
+              ),
+          fullscreenDialog: true),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,138 +186,16 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
                       ),
                     ),
                   ),
-                  const BottomButtonSheetWidget(),
+                  BottomButtonSheetWidget(
+                    item: item,
+                    onPressed: onPressShowSchedule,
+                  ),
                 ]);
           }
           return Util.ShimmerBuilder(
             const CommunityItemShimmerWidget(),
           );
         },
-      ),
-    );
-  }
-}
-
-class BottomButtonSheetWidget extends StatelessWidget {
-  const BottomButtonSheetWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: margin_side, vertical: 10.h),
-      height: 94.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // member count
-              const MemberCounterWidget(),
-              Container(width: 8.0),
-              const CircleIconButtonWidget(),
-            ],
-          ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                Colors.black,
-              ),
-              foregroundColor: MaterialStateProperty.all<Color>(
-                Colors.white,
-              ),
-              fixedSize: MaterialStateProperty.all<Size>(
-                Size(130.w, 43.h),
-              ),
-            ),
-            onPressed: () {},
-            child: const Text(
-              "일정 보기",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CircleIconButtonWidget extends StatelessWidget {
-  const CircleIconButtonWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        print('Button pressed!');
-      },
-      child: Container(
-        width: 35.w,
-        height: 35.w,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          border: Border.all(
-            color: OmgColors.lineGreyColor,
-          ),
-        ),
-        child: Center(
-          child: Image.asset(
-            width: 15.w,
-            height: 15.w,
-            Images.communityShare,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MemberCounterWidget extends StatelessWidget {
-  const MemberCounterWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14.h, vertical: 10.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        color: OmgColors.primaryColor,
-      ),
-      child: Row(
-        children: <Widget>[
-          Image.asset(
-            Images.communityPersonW, // replace with your image asset path
-            width: 14.0,
-            height: 14.0,
-          ),
-          const SizedBox(width: 8.0), // adjust for your spacing preference
-          Text(
-            "30",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            "/50",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 15.sp,
-            ),
-          ),
-        ],
       ),
     );
   }

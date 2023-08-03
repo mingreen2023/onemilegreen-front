@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:onemilegreen_front/screens/pages/community_create_page.dart';
-import 'package:onemilegreen_front/screens/pages/community_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/community_create_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/community_page.dart';
 import 'package:onemilegreen_front/screens/pages/green_city_page.dart';
 import 'package:onemilegreen_front/screens/pages/my_page.dart';
-import 'package:onemilegreen_front/screens/pages/routine_page.dart';
+import 'package:onemilegreen_front/screens/pages/routine/routine_page.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/util/images.dart';

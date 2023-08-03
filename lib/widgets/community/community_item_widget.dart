@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/community_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/screens/pages/community_detail_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/community_detail_page.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
 
 class CommunityItemWidget extends StatelessWidget {
-  CommunityList item;
+  CommunityListItem item;
   CommunityItemWidget(
     this.item, {
     super.key,

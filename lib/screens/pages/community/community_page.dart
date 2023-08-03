@@ -111,10 +111,10 @@ class _CommunityPageState extends State<CommunityPage>
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   CommunityListResponse res = snapshot.data![0];
-                  List<CommunityList> list = res.data.communityList;
+                  List<CommunityListItem> list = res.data.communityList;
 
                   CommunityListResponse myRes = snapshot.data![1];
-                  List<CommunityList> myList = myRes.data.communityList;
+                  List<CommunityListItem> myList = myRes.data.communityList;
 
                   return TabBarView(controller: _tabController, children: [
                     CommunityListWidget(list),
