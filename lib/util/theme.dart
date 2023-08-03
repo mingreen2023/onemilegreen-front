@@ -71,6 +71,11 @@ TextTheme textTheme() {
 }
 
 class CustomTextStyle {
+  static TextStyle mainMsgHead = TextStyle(
+    color: Colors.black,
+    fontSize: 20.sp,
+  );
+
   static TextStyle routineMsg = TextStyle(
     fontSize: 16.sp,
     color: OmgColors.primaryColor,

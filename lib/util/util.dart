@@ -83,7 +83,7 @@ extension EffectTypeIconName on EffectType {
       case EffectType.Tree:
         return Images.mainMTree;
       case EffectType.Plastic:
-        return Images.mainMCup;
+        return Images.mainMPlastic;
       case EffectType.PaperCup:
         return Images.mainMCup;
       default:

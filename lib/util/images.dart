@@ -18,9 +18,13 @@ class Images {
 
 // main
   static const String mainDistrict = "${imagePath}main_district.png";
+  static const String mainDistrictFirst = "${imagePath}1단계.png";
+  static const String mainDistrictSecond = "${imagePath}2단계.png";
+  static const String mainDistrictThird = "${imagePath}3단계.png";
   static const String mainSeoul = "${imagePath}main_seoul.png";
   static const String mainMCup = "${imagePath}main_m_cup.png";
   static const String mainMTree = "${imagePath}main_m_tree.png";
+  static const String mainMPlastic = "${imagePath}main_m_plastic_bag.png";
   static const String mainTopArrow = "${imagePath}main_top_arrow.png";
   static const String mainTopMap = "${imagePath}main_top_map.png";
 

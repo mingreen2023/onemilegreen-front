@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
-import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/widgets/main/main_effect_widget.dart';
@@ -17,7 +16,8 @@ class GreenCityPage extends StatefulWidget {
   State<GreenCityPage> createState() => _GreenCityPageState();
 }
 
-class _GreenCityPageState extends State<GreenCityPage> {
+class _GreenCityPageState extends State<GreenCityPage>
+    with TickerProviderStateMixin {
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
@@ -27,7 +27,6 @@ class _GreenCityPageState extends State<GreenCityPage> {
   late List<GreenEffectCardWidget> greenEffectList;
   Future<GreenSeoulStatusModel> futureGreenStatus =
       DioServices.getGreenSeoulStatus(userNo: "1");
-
   // TODO: manage user info
   String userName = "서하";
 
@@ -35,80 +34,62 @@ class _GreenCityPageState extends State<GreenCityPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Flexible(
-          flex: 3,
-          fit: FlexFit.tight,
-          child: Column(
-            children: [
-              SizedBox(
-                height: margin_top,
-              ),
-              // Top - info
-              FutureBuilder(
-                  future: futureGreenStatus,
-                  builder: (context, greenStatus) {
-                    if (greenStatus.hasData) {
-                      return UserInfoWidget(
-                          nickName: '서하',
-                          userMileage:
-                              greenStatus.data!.userMileage.toString());
-                    } else {
-                      return const Center();
-                    }
-                  }),
-            ],
-          ),
+        SizedBox(
+          height: margin_top,
+        ),
+        // Top - info
+        FutureBuilder(
+            future: futureGreenStatus,
+            builder: (context, greenStatus) {
+              if (greenStatus.hasData) {
+                return UserInfoWidget(
+                    nickName: '서하',
+                    userMileage: greenStatus.data!.userMileage.toString());
+              } else {
+                return const Center();
+              }
+            }),
+        SizedBox(
+          height: 60.h,
         ),
         // Middle~Bottom - swipe
-        Flexible(
-          flex: 7,
-          child: FutureBuilder(
-              future: futureGreenStatus,
-              builder: (context, greenStatus) {
-                if (greenStatus.hasData) {
-                  greenEffectList =
-                      greenEffectCardListBuilder(greenStatus.data!);
+        FutureBuilder(
+            future: futureGreenStatus,
+            builder: (context, greenStatus) {
+              if (greenStatus.hasData) {
+                greenEffectList = greenEffectCardListBuilder(greenStatus.data!);
 
-                  return CarouselSlider(
+                return Expanded(
+                  child: CarouselSlider(
                     items: <Widget>[
                       for (var i = 0; i < 3; i++)
                         Column(
                           children: [
                             greenEffectList[i],
-                            IndicatorWidget(
-                                controller: _controller, current: _current),
-                            SizedBox(
-                              height: 50.h,
-                            ),
-                            Image.asset(
-                              Images.mainDistrict,
-                              width: MediaQuery.of(context).size.width,
-                              height: 277.h,
-                              fit: BoxFit.fitHeight,
-                            ),
                           ],
                         )
                     ],
                     carouselController: _controller,
                     options: CarouselOptions(
+                        enableInfiniteScroll: false,
                         height: double.maxFinite,
                         animateToClosest: true,
                         viewportFraction: 1.0,
-                        enlargeCenterPage: false,
+                        enlargeCenterPage: true,
                         onPageChanged: (index, reason) {
                           setState(() {
                             _current = index;
                           });
                         }),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: OmgColors.primaryColor,
                   ),
                 );
-              }),
-        ),
+              }
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: OmgColors.primaryColor,
+                ),
+              );
+            }),
       ],
     );
   }
@@ -171,42 +152,5 @@ class _GreenCityPageState extends State<GreenCityPage> {
     ));
 
     return greenEffectList;
-  }
-}
-
-class IndicatorWidget extends StatelessWidget {
-  const IndicatorWidget({
-    super.key,
-    required CarouselController controller,
-    required int current,
-  })  : _controller = controller,
-        _current = current;
-
-  final CarouselController _controller;
-  final int _current;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        for (var index = 0; index < 3; index++)
-          GestureDetector(
-            onTap: () => _controller.animateToPage(index),
-            child: Container(
-              width: 5.w,
-              height: 5.w,
-              margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: (Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white
-                          : Colors.black)
-                      .withOpacity(_current == index ? 0.9 : 0.4)),
-            ),
-          ),
-      ],
-    );
   }
 }
