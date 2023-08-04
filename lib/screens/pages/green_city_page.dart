@@ -108,7 +108,7 @@ class _GreenCityPageState extends State<GreenCityPage>
 
     // user
     // effect: userEffect
-    CalculatedEffect userCalEffect = pickRandomResult(userEffect);
+    CalculatedEffect userCalEffect = effectCalculator(userEffect)[0];
     greenEffectList.add(GreenEffectCardWidget(
       index: 0,
       name: userName,
@@ -123,7 +123,7 @@ class _GreenCityPageState extends State<GreenCityPage>
 
     // district
     // effect: districtTotalEffect
-    CalculatedEffect districtEffect = pickRandomResult(districtTotalEffect);
+    CalculatedEffect districtEffect = effectCalculator(districtTotalEffect)[1];
     greenEffectList.add(GreenEffectCardWidget(
       index: 1,
       name: userName,
@@ -137,8 +137,7 @@ class _GreenCityPageState extends State<GreenCityPage>
     ));
     // seoul
     // effect: seoulTotalEffect
-
-    CalculatedEffect seoulEffect = pickRandomResult(seoulTotalEffect);
+    CalculatedEffect seoulEffect = effectCalculator(seoulTotalEffect)[2];
     greenEffectList.add(GreenEffectCardWidget(
       index: 2,
       name: userName,

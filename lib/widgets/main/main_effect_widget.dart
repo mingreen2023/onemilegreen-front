@@ -43,7 +43,6 @@ class _GreenEffectCardWidgetState extends State<GreenEffectCardWidget>
         Tween<Offset>(begin: const Offset(0, -0.3), end: const Offset(0, 0))
             .animate(_animationController);
 
-    // Start the animation
     _animationController.forward();
   }
 

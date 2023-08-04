@@ -95,7 +95,7 @@ extension EffectTypeIconName on EffectType {
 
 class CalculatedEffect {
   final EffectType effectType;
-  final double calEffect;
+  final int calEffect;
   final String unit;
   final String iconName;
 
@@ -107,33 +107,33 @@ class CalculatedEffect {
   });
 }
 
-// TODO: remove or fix
 List<CalculatedEffect> effectCalculator(int effect) {
-  double tree = double.parse(
-      (effect / 21.0).toStringAsFixed(1)); // 1그루 나무는 약 21kg CO2를 흡수
-  double paperCup = double.parse(
-      (effect / 0.110).toStringAsFixed(1)); // 1개의 종이컵은 대략 0.110g CO2
-  double plastic = double.parse(
-      (effect / 6.0).toStringAsFixed(1)); // 1kg의 플라스틱은 약 6kg CO2를 생산
+  // effect는 10g 단위의 CO2를 의미하므로, kg 단위로 변환
+  double effectInKg = effect / 100;
+
+  int tree = (effectInKg / 2.0).round(); // 1그루 나무는 약 2kg CO2를 흡수
+  int paperCup = (effectInKg / 0.00686).round(); // 1개의 종이컵은 대략 0.00686kg CO2
+  int plastic =
+      (effectInKg / 0.04748).round(); // 1장의 플라스틱 봉투는 약 0.04748kg CO2를 생산
 
   List<CalculatedEffect> calculatedEffects = [
-    CalculatedEffect(
-      effectType: EffectType.Tree,
-      calEffect: tree,
-      unit: "그루",
-      iconName: EffectType.Tree.iconName,
-    ),
-    CalculatedEffect(
-      effectType: EffectType.Plastic,
-      calEffect: plastic,
-      unit: "kg",
-      iconName: EffectType.Plastic.iconName,
-    ),
     CalculatedEffect(
       effectType: EffectType.PaperCup,
       calEffect: paperCup,
       unit: "개",
       iconName: EffectType.PaperCup.iconName,
+    ),
+    CalculatedEffect(
+      effectType: EffectType.Plastic,
+      calEffect: plastic,
+      unit: "장",
+      iconName: EffectType.Plastic.iconName,
+    ),
+    CalculatedEffect(
+      effectType: EffectType.Tree,
+      calEffect: tree,
+      unit: "그루",
+      iconName: EffectType.Tree.iconName,
     ),
   ];
 
