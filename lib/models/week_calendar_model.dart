@@ -1,9 +1,13 @@
+import 'package:onemilegreen_front/models/routine_detail_model.dart';
+
 class WeekCalendar {
   final DateTime startDate;
   final DateTime endDate;
   final DateTime firstDate;
   final DateTime lastDate;
   final List<Week> weeks;
+  final RoutineDetailModel? routineDetailModel;
+  Map<String, int> routineStatusMap = {};
 
   WeekCalendar({
     required this.startDate,
@@ -11,7 +15,12 @@ class WeekCalendar {
     required this.firstDate,
     required this.lastDate,
     required this.weeks,
-  });
+    this.routineDetailModel,
+  }) {
+    routineDetailModel?.rouDetailList?.forEach((routineCalendarModel) {
+      routineStatusMap[routineCalendarModel.date] = routineCalendarModel.status;
+    });
+  }
 }
 
 class Week {

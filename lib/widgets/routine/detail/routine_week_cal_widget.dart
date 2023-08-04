@@ -2,16 +2,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
+import 'package:onemilegreen_front/models/week_calendar_model.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/images.dart';
+import 'package:onemilegreen_front/util/util.dart';
 
 class RoutineCalWidget extends StatefulWidget {
   final RoutineDetailModel routineDetailModel;
+  final WeekCalendar weekCalendar;
 
-  const RoutineCalWidget(
+  RoutineCalWidget(
     this.routineDetailModel, {
     super.key,
-  });
+  }) : weekCalendar = Formatter.createRoutineWeekCalendar(routineDetailModel);
 
   @override
   State<RoutineCalWidget> createState() => _RoutineCalWidgetState();
@@ -20,56 +23,52 @@ class RoutineCalWidget extends StatefulWidget {
 class _RoutineCalWidgetState extends State<RoutineCalWidget> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
-  List<Widget> list = [
-    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-      for (var i = 0; i < 7; i++) ...[
-        SizedBox(
-          width: 37.w,
-          height: 37.h,
-          child: Stack(
-            alignment: Alignment.center,
+
+  List<Row> buildWeelCalendar() {
+    return [
+      for (Week week in widget.weekCalendar.weeks) ...[
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Image.asset(Images.calSuccess),
-              Text(
-                '27',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ]),
-    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-      for (var i = 0; i < 7; i++) ...[
-        SizedBox(
-          width: 37.w,
-          height: 37.h,
-          child: Stack(
-            children: <Widget>[
-              Image.asset(Images.calSuccess),
-              Center(
-                child: Text(
-                  '27',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    ]),
-  ];
+              for (Day day in week.days) ...[
+                InkWell(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Container(
+                      width: 37.w,
+                      height: 37.w,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            day.imageAsset,
+                          ),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          day.date.day.toString(),
+                          style: TextStyle(
+                            color: day.imageAsset == Images.calNotTodo
+                                ? Colors.white
+                                : OmgColors.primaryColor,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {});
+                    }),
+              ],
+            ]),
+      ]
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Row> routineCalendar = buildWeelCalendar();
+
     return Column(
       children: [
         SizedBox(
@@ -87,20 +86,25 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                padding: const EdgeInsets.all(0),
-                icon: ImageIcon(
-                  color: OmgColors.arrowGreyColor,
-                  const AssetImage(
-                    Images.chevronBack,
-                  ),
-                  size: 16.h,
-                ),
-                iconSize: 11.h,
-                onPressed: () {
-                  _controller.previousPage();
-                },
-              ),
+              routineCalendar.length == 1
+                  ? SizedBox(
+                      width: 48.w,
+                      height: 48.w,
+                    )
+                  : IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: ImageIcon(
+                        color: OmgColors.arrowGreyColor,
+                        const AssetImage(
+                          Images.chevronBack,
+                        ),
+                        size: 16.h,
+                      ),
+                      iconSize: 11.h,
+                      onPressed: () {
+                        _controller.previousPage();
+                      },
+                    ),
               SizedBox(
                 width: 14.w,
               ),
@@ -115,20 +119,25 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
               SizedBox(
                 width: 14.w,
               ),
-              IconButton(
-                padding: const EdgeInsets.all(0),
-                icon: ImageIcon(
-                  color: OmgColors.arrowGreyColor,
-                  const AssetImage(
-                    Images.chevronForward,
-                  ),
-                  size: 16.h,
-                ),
-                iconSize: 11.h,
-                onPressed: () {
-                  _controller.nextPage();
-                },
-              ),
+              routineCalendar.length == 1
+                  ? SizedBox(
+                      width: 48.w,
+                      height: 48.w,
+                    )
+                  : IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: ImageIcon(
+                        color: OmgColors.arrowGreyColor,
+                        const AssetImage(
+                          Images.chevronForward,
+                        ),
+                        size: 16.h,
+                      ),
+                      iconSize: 11.h,
+                      onPressed: () {
+                        _controller.nextPage();
+                      },
+                    ),
             ],
           ),
         ),
@@ -136,10 +145,11 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
           height: 14.h, //+ image icon top padding = 24
         ),
         CarouselSlider(
-          items: list,
+          items: routineCalendar,
           carouselController: _controller,
           options: CarouselOptions(
               height: 37.h,
+              enableInfiniteScroll: false,
               animateToClosest: true,
               viewportFraction: 1.0,
               enlargeCenterPage: false,

@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:onemilegreen_front/models/community_schedule_model.dart';
+import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/models/week_calendar_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
@@ -210,6 +211,133 @@ class Formatter {
   }
 
   // 주별 달력 초기화
+  static WeekCalendar createRoutineWeekCalendar(
+      RoutineDetailModel routineDetailModel) {
+    // status mapping
+    Map<DateTime, int> routineStatusMap = {};
+    routineDetailModel.rouDetailList?.forEach((routineCalendarModel) {
+      DateTime date = DateTime.parse(routineCalendarModel.date);
+      routineStatusMap[date] = routineCalendarModel.status;
+    });
+
+    String firstDate = routineDetailModel.rouStDate;
+    String lastDate = routineDetailModel.rouEndDate;
+    DateTime first = DateTime.parse(firstDate);
+    DateTime last = DateTime.parse(lastDate);
+
+    DateTime start = first;
+    DateTime end = last;
+
+    first = first.subtract(Duration(days: first.weekday - 1));
+    last = last.add(Duration(days: 7 - last.weekday));
+
+    Map<String, int> weekdayMapping = {
+      "월": DateTime.monday,
+      "화": DateTime.tuesday,
+      "수": DateTime.wednesday,
+      "목": DateTime.thursday,
+      "금": DateTime.friday,
+      "토": DateTime.saturday,
+      "일": DateTime.sunday,
+    };
+
+    List<int> parsedDays = [];
+    String rouDayofweek = routineDetailModel.rouDayofweek;
+
+    if (rouDayofweek == "평일") {
+      parsedDays = [
+        DateTime.monday,
+        DateTime.tuesday,
+        DateTime.wednesday,
+        DateTime.thursday,
+        DateTime.friday
+      ];
+    } else if (rouDayofweek == "주말") {
+      parsedDays = [DateTime.saturday, DateTime.sunday];
+    } else {
+      for (String weekday in weekdayMapping.keys) {
+        if (rouDayofweek.contains(weekday)) {
+          parsedDays.add(weekdayMapping[weekday]!);
+        }
+      }
+    }
+
+    Map<DateTime, int> scheduleDates = {};
+    for (int j = 0; j <= last.difference(first).inDays; j++) {
+      DateTime thisDay = first.add(Duration(days: j));
+      scheduleDates[thisDay] = parsedDays.contains(thisDay.weekday) ? 1 : 0;
+    }
+
+    List<Week> weeks = [];
+    int weekNumber = 1;
+    String currentMonth = DateFormat('MM').format(first);
+
+    for (int i = 0; i <= last.difference(first).inDays; i++) {
+      DateTime currentDay = first.add(Duration(days: i));
+
+      if (currentDay.weekday == DateTime.monday) {
+        DateTime medianDay = currentDay.add(const Duration(days: 3));
+        String month = DateFormat('MM').format(medianDay);
+
+        if (month != currentMonth) {
+          weekNumber = 1;
+          currentMonth = month;
+        }
+
+        List<Day> days = [];
+        for (int j = 0; j < 7; j++) {
+          DateTime thisDay = currentDay.add(Duration(days: j));
+          String imageAsset;
+          if (DateTime.now().day == thisDay.day &&
+              DateTime.now().month == thisDay.month &&
+              DateTime.now().year == thisDay.year) {
+            // 오늘
+            imageAsset = Images.calToday;
+          } else if (routineStatusMap[thisDay] == 0) {
+            // 인증 실패
+            imageAsset = Images.calFailed;
+          } else {
+            // 인증 예정
+            imageAsset = scheduleDates[thisDay] == 1
+                ? Images.calTodo
+                : Images.calNotTodo;
+          }
+
+          days.add(Day(date: thisDay, imageAsset: imageAsset));
+        }
+
+        weeks.add(Week(
+          weekNumber: weekNumber,
+          month: month,
+          days: days,
+        ));
+      }
+
+      if (currentDay.weekday == DateTime.sunday) {
+        weekNumber++;
+      }
+    }
+
+    return WeekCalendar(
+        startDate: start,
+        endDate: end,
+        firstDate: first,
+        lastDate: last,
+        weeks: weeks,
+        routineDetailModel: routineDetailModel);
+  }
+
+  static int calculateWeeks(String startDate, String endDate) {
+    DateTime start = DateTime.parse(startDate);
+    DateTime end = DateTime.parse(endDate);
+
+    int diffDays = end.difference(start).inDays;
+    int weeks = (diffDays / 7).floor();
+
+    return weeks;
+  }
+
+  // 주별 달력 초기화
   static WeekCalendar createWeekCalendar(List<ScheduleListItem> scheduleList) {
     String firstDate = scheduleList[0].schStDate;
     String lastDate = scheduleList.last.schEndDate;
@@ -283,15 +411,5 @@ class Formatter {
       lastDate: last,
       weeks: weeks,
     );
-  }
-
-  static int calculateWeeks(String startDate, String endDate) {
-    DateTime start = DateTime.parse(startDate);
-    DateTime end = DateTime.parse(endDate);
-
-    int diffDays = end.difference(start).inDays;
-    int weeks = (diffDays / 7).floor();
-
-    return weeks;
   }
 }
