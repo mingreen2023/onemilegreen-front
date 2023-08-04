@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
@@ -42,6 +43,8 @@ class _GreenCityPageState extends State<GreenCityPage>
             future: futureGreenStatus,
             builder: (context, greenStatus) {
               if (greenStatus.hasData) {
+                FlutterNativeSplash.remove();
+
                 return UserInfoWidget(
                     nickName: '서하',
                     userMileage: greenStatus.data!.userMileage.toString());

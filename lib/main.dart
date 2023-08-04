@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:onemilegreen_front/screens/home_screen.dart';
 import 'package:onemilegreen_front/util/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "dotenv");
-
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
                   const Spacer(),
                 ])
               : MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   title: 'OneMileGreen',
                   theme: theme(),
                   home: const HomeScreen(),
