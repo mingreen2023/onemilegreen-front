@@ -40,7 +40,7 @@ class _CommunityPageState extends State<CommunityPage>
   late List<CommunityListItem> myList;
   late List<CommunityListItem> myFilteredList;
   double widget1Opacity = 0.0;
-  int fadeMilliseconds = 1000;
+  int fadeMilliseconds = 1500;
 
   @override
   void initState() {
@@ -55,9 +55,7 @@ class _CommunityPageState extends State<CommunityPage>
       });
     });
 
-    Future.delayed(Duration(milliseconds: fadeMilliseconds), () {
-      widget1Opacity = 1;
-    });
+    widget1Opacity = 1;
     super.initState();
   }
 
@@ -183,7 +181,11 @@ class _CommunityPageState extends State<CommunityPage>
                     )
                   ]);
                 }
-                return const Center();
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: OmgColors.primaryColor,
+                  ),
+                );
               }),
         ),
       ],

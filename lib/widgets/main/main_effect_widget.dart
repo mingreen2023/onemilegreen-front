@@ -49,8 +49,9 @@ class _GreenEffectCardWidgetState extends State<GreenEffectCardWidget>
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+
+    super.dispose();
   }
 
   @override
