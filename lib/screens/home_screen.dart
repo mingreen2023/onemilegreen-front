@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onemilegreen_front/screens/pages/community/community_create_page.dart';
 import 'package:onemilegreen_front/screens/pages/community/community_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/create_community/community_create_page.dart';
 import 'package:onemilegreen_front/screens/pages/green_city_page.dart';
 import 'package:onemilegreen_front/screens/pages/my_page.dart';
 import 'package:onemilegreen_front/screens/pages/routine/routine_page.dart';
@@ -19,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const GreenCityPage(),
-    RoutinePage(),
-    CommunityPage(),
+    const RoutinePage(),
+    const CommunityPage(),
     const MyPage(),
   ];
 

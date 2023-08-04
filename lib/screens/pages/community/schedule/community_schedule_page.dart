@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/community_detail_model.dart';
 import 'package:onemilegreen_front/models/community_schedule_model.dart';
-import 'package:onemilegreen_front/screens/pages/community/community_schedule_detail_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/schedule/community_schedule_detail_page.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:onemilegreen_front/util/util.dart';

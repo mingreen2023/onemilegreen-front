@@ -5,7 +5,6 @@ import 'package:onemilegreen_front/models/community_detail_model.dart';
 import 'package:onemilegreen_front/models/community_model.dart';
 import 'package:onemilegreen_front/models/community_schedule_model.dart';
 import 'package:onemilegreen_front/models/green_seoul_status_model.dart';
-import 'package:onemilegreen_front/models/routine_auth_result_model.dart';
 import 'package:onemilegreen_front/models/routine_join_result.dart';
 import 'package:onemilegreen_front/models/routine_list_model.dart';
 import 'package:onemilegreen_front/models/routine_single_model.dart';
@@ -162,22 +161,26 @@ class DioServices {
       );
 
 //routine/routineUploadFile
-  static Future<RoutineAuthResult> insertRoutineFile(FormData formData) async {
+  static Future<String> insertRoutineFile(FormData formData) async {
     try {
       final response = await _dio.post(
         "$server/$routine/$routineUploadFile",
         data: formData,
       );
+      logger.d(response.data);
+      return response.data;
 
-      if (response.data["code"] == 200) {
-        logger.d(response.data);
-        return RoutineAuthResult.fromJson(response.data);
-      } else {
-        throw Exception(response.data["message"]);
-      }
+      // if (response.data["code"] == 200) {
+      // } else {
+      //   //throw Exception(response.data["message"]);
+      //   return RoutineAuthResult(code: 404, message: "error", result: "");
+      // }
     } catch (e) {
-      logger.e(e);
-      throw Exception(e);
+      logger.e(e.toString());
+      //throw Exception(e);
+      return e.toString();
+
+      //return RoutineAuthResult(code: 404, message: "error", result: "");
     }
   }
 

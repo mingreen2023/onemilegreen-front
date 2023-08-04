@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/models/routine_auth_result_model.dart';
 import 'package:onemilegreen_front/models/routine_detail_model.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
@@ -35,15 +34,12 @@ class RoutineDetailTabViewWidget extends StatelessWidget {
 
       FormData formData = FormData.fromMap({
         "file": multiFile,
-        "user_rou_id": 88,
+        "user_rou_id": 1,
         'urd_content': 'TEST',
       });
 
-      logger.d("formData: $formData");
-
       try {
-        Future<RoutineAuthResult> result =
-            DioServices.insertRoutineFile(formData);
+        Future<String> result = DioServices.insertRoutineFile(formData);
 
         result.then((value) => logger.d("result = $value"));
       } on Exception {

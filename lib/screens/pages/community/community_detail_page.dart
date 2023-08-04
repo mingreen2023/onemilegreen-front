@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:onemilegreen_front/models/community_detail_model.dart';
-import 'package:onemilegreen_front/screens/pages/community/community_schedule_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/schedule/community_schedule_create_page.dart';
+import 'package:onemilegreen_front/screens/pages/community/schedule/community_schedule_page.dart';
 import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -126,6 +127,49 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
+                                // 모임장일 경우, 일정등록 버튼 >>>
+                                //item.comId == userNo ?
+                                Column(
+                                  children: [
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                          OmgColors.cardColor,
+                                        ),
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                          OmgColors.primaryColor,
+                                        ),
+                                        fixedSize:
+                                            MaterialStateProperty.all<Size>(
+                                          Size(double.maxFinite, 41.h),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CommunityScheduleCreatePage(),
+                                              fullscreenDialog: true),
+                                        );
+                                      },
+                                      child: Text(
+                                        "일정 등록하기",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                  ],
+                                ),
+                                //,: Container(),
+                                // 모임장일 경우, 일정등록 버튼 />>>
                                 Container(
                                   padding: EdgeInsets.symmetric(
                                     vertical: 20.h,

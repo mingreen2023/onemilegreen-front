@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/colors.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,7 +23,6 @@ class ImageLoaderWidget extends StatelessWidget {
 
   String validateUrl(String url) {
     String s3BucketUrl = Util.domain;
-    logger.d(url);
 
     // url이 s3BucketUrl로 시작하고 이어서 'http'로 시작하는 경우
     if (url.startsWith(s3BucketUrl) &&

@@ -33,9 +33,32 @@ class UserInfoWidget extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Colors.black),
               ),
-              Text(
-                userMileage,
-                style: Theme.of(context).textTheme.headlineLarge,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    userMileage,
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 5.h,
+                    ),
+                    child: const Text(
+                      " M",
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
