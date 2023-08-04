@@ -1,5 +1,5 @@
 name: onemilegreen_front
-description: A new Flutter project.
+description: "이웃들과 함께하는 지속가능한 생활을 위한 앱"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -47,6 +47,7 @@ dependencies:
   webview_flutter: ^4.2.2
   share_plus: ^7.1.0
   flutter_native_splash: ^2.3.1
+  flutter_launcher_icons: ^0.13.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -249,3 +250,22 @@ flutter_native_splash:
   #info_plist_files:
   #  - 'ios/Runner/Info-Debug.plist'
   #  - 'ios/Runner/Info-Release.plist'
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/omg_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/images/omg_icon.png"
+    background_color: #FFFFFF
+    theme_color: "#357953"
+  windows:
+    generate: true
+    image_path: "assets/images/omg_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/omg_icon.png"
