@@ -47,9 +47,11 @@ class _RoutineCalWidgetState extends State<RoutineCalWidget> {
                         child: Text(
                           day.date.day.toString(),
                           style: TextStyle(
-                            color: day.imageAsset == Images.calNotTodo
-                                ? Colors.white
-                                : OmgColors.primaryColor,
+                            color: (day.imageAsset == Images.calFailed)
+                                ? Colors.transparent
+                                : (day.imageAsset == Images.calNotTodo)
+                                    ? Colors.white
+                                    : OmgColors.primaryColor,
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                           ),
