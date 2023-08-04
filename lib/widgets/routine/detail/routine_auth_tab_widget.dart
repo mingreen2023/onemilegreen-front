@@ -100,7 +100,7 @@ class RoutineAuthTabWidget extends StatelessWidget {
         ),
         Container(
           width: double.maxFinite,
-          height: 71.h,
+          height: 74.h,
           color: OmgColors.textGreyColor,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -114,6 +114,9 @@ class RoutineAuthTabWidget extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        SizedBox(
+          height: 20.h,
         ),
       ],
     );

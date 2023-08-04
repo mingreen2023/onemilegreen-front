@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 selIcon: Images.btMypageActive,
                 unselIcon: Images.btMypage,
                 label: myPage,
-                size: bottomIconSize - 5),
+                size: bottomIconSize),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.black,

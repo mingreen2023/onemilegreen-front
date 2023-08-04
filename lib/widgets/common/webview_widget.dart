@@ -80,6 +80,9 @@ class _OmgWebViewWidgetState extends State<OmgWebViewWidget> {
               ),
             ),
           ],
+          WebViewWidget(
+            controller: controller,
+          ),
         ],
       ),
     );

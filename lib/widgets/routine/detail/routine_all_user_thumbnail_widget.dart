@@ -63,7 +63,7 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
                 child: Image.asset(
                   Images.routineCheck,
                   width: 324.w,
-                  height: 42.h,
+                  height: 48.h,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -97,7 +97,7 @@ class RoutineAllUserThumbnailWidget extends StatelessWidget {
             Image.asset(
               Images.routineCheck,
               width: 324.w,
-              height: 42.h,
+              height: 48.h,
               fit: BoxFit.contain,
             ),
           ],

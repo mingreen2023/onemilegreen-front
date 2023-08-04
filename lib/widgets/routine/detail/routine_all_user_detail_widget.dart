@@ -7,6 +7,7 @@ import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/util.dart';
 import 'package:onemilegreen_front/widgets/common/back_arrow_appbar.dart';
 import 'package:onemilegreen_front/widgets/common/image_loader_widget.dart';
+import 'package:collection/collection.dart';
 
 class RoutineAllUserDetailWidget extends StatefulWidget {
   final List<RoutineDetails> routnineList;
@@ -20,18 +21,41 @@ class RoutineAllUserDetailWidget extends StatefulWidget {
 
 class _RoutineAllUserDetailWidgetState
     extends State<RoutineAllUserDetailWidget> {
-  late bool isLike;
+  late List<bool> isLike;
+  double size = 0;
+  bool isClicked = false;
+  int mSec = 500;
+
+  @override
+  void initState() {
+    super.initState();
+    isLike =
+        widget.routnineList.map((e) => e.urdLike == 1 ? true : false).toList();
+
+    logger.d("isLike! $isLike");
+  }
+
   // TODO: call api
-  void onClickLike(RoutineDetails item) {
+  void onClickLike(RoutineDetails item, int index) {
     setState(() {
-      logger.d("click! $isLike");
+      isLike[index] = !isLike[index];
 
-      isLike = !isLike;
+      if (isLike[index]) {
+        isClicked = true;
+        size = 100.w;
 
-      // TODO: fix with api call
-      // item.urdLike = isLike ? 1 : 0;
+        Future.delayed(Duration(milliseconds: mSec * 2), () {
+          setState(() {
+            size = 0;
+          });
+        });
 
-      logger.d("click! $isLike");
+        Future.delayed(const Duration(milliseconds: 200), () {
+          setState(() {
+            isClicked = false;
+          });
+        });
+      }
     });
   }
 
@@ -42,11 +66,10 @@ class _RoutineAllUserDetailWidgetState
       body: Container(
         child: CarouselSlider(
             options: CarouselOptions(
-              aspectRatio: 300.w / 510.h,
+              aspectRatio: 300.w / 520.h,
             ),
-            items: widget.routnineList.map(
-              (item) {
-                isLike = item.urdLike == 1 ? true : false;
+            items: widget.routnineList.mapIndexed(
+              (index, item) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -69,11 +92,33 @@ class _RoutineAllUserDetailWidgetState
                           color: Colors.white,
                         ),
                         child: Center(
-                          child: ImageLoaderWidget(
-                            "${Util.domain}${item.urdImage}",
-                            fit: BoxFit.cover,
-                            width: 300.w,
-                            height: 510.h,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ImageLoaderWidget(
+                                "${Util.domain}${item.urdImage}",
+                                fit: BoxFit.cover,
+                                width: 300.w,
+                                height: 510.h,
+                              ),
+                              AnimatedContainer(
+                                width: 300.w,
+                                height: 510.h,
+                                duration: const Duration(milliseconds: 200),
+                                color: isClicked
+                                    ? Colors.greenAccent.withOpacity(0.1)
+                                    : Colors.transparent,
+                              ),
+                              AnimatedSize(
+                                curve: Curves.bounceOut,
+                                duration: Duration(milliseconds: mSec),
+                                child: SizedBox(
+                                  width: size,
+                                  height: size,
+                                  child: Image.asset(Images.iconHeartFill),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -95,33 +140,20 @@ class _RoutineAllUserDetailWidgetState
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            if (isLike) ...[
-                              IconButton(
-                                padding: const EdgeInsets.all(0),
-                                constraints: BoxConstraints(
-                                  maxHeight: 22.h,
-                                  maxWidth: 20.h,
-                                ),
-                                iconSize: 20.w,
-                                onPressed: () => onClickLike(item),
-                                icon: Image.asset(
-                                  Images.iconHeartFill,
-                                ),
+                            IconButton(
+                              padding: const EdgeInsets.all(0),
+                              constraints: BoxConstraints(
+                                maxHeight: 22.h,
+                                maxWidth: 20.h,
                               ),
-                            ] else ...[
-                              IconButton(
-                                padding: const EdgeInsets.all(0),
-                                constraints: BoxConstraints(
-                                  maxHeight: 22.h,
-                                  maxWidth: 20.h,
-                                ),
-                                iconSize: 20.w,
-                                onPressed: () => onClickLike(item),
-                                icon: Image.asset(
-                                  Images.iconHeartOutlined,
-                                ),
+                              iconSize: 20.w,
+                              onPressed: () => onClickLike(item, index),
+                              icon: Image.asset(
+                                isLike[index]
+                                    ? Images.iconHeartFill
+                                    : Images.iconHeartOutlined,
                               ),
-                            ]
+                            ),
                           ],
                         ),
                       ),

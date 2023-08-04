@@ -1,5 +1,25 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:onemilegreen_front/services/dio_service.dart';
+import 'package:path_provider/path_provider.dart';
+
 class Images {
   Images._();
+
+  static Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load(path);
+
+    final file = File('${(await getApplicationSupportDirectory()).path}/$path');
+
+    await file.create(recursive: true);
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    logger.d("file: ${file.path}");
+    return file;
+  }
 
   static String getImagePath(imgName) => "$imagePath$imgName";
 
@@ -27,6 +47,7 @@ class Images {
   static const String mainMPlastic = "${imagePath}main_m_plastic_bag.png";
   static const String mainTopArrow = "${imagePath}main_top_arrow.png";
   static const String mainTopMap = "${imagePath}main_top_map.png";
+  static const String shareImage = "${imagePath}share_image.png";
 
 // routine
   static const String routineJoined = "${imagePath}routine_joined.png";

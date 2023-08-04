@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onemilegreen_front/services/dio_service.dart';
 import 'package:onemilegreen_front/util/images.dart';
 import 'package:onemilegreen_front/util/constants.dart';
 import 'package:onemilegreen_front/widgets/common/webview_widget.dart';
+import 'package:share_plus/share_plus.dart';
 
 class UserInfoWidget extends StatelessWidget {
   final String nickName, userMileage;
@@ -11,6 +15,13 @@ class UserInfoWidget extends StatelessWidget {
     required this.nickName,
     required this.userMileage,
   });
+
+  void onPressed() async {
+    File f = await Images.getImageFileFromAssets(Images.shareImage);
+    logger.d("onPressed");
+
+    Share.shareXFiles([XFile(f.path)]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +82,7 @@ class UserInfoWidget extends StatelessWidget {
                 child: IconButton(
                   icon: Image.asset(Images.mainTopArrow),
                   alignment: Alignment.topCenter,
-                  onPressed: () {},
+                  onPressed: onPressed,
                 ),
               ),
               SizedBox(

@@ -217,9 +217,6 @@ class _CommunityCreateFirstPageState extends State<CommunityCreateFirstPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 34.h,
-                ),
               ],
             ),
           )
